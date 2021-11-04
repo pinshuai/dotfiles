@@ -1,5 +1,8 @@
 " -------vim-plug--------
 call plug#begin('~/.vim/plugged')
+Plug 'mbbill/undotree'
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-repeat'
 Plug 'akinsho/bufferline.nvim'
 " Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'andymass/vim-matchup'
@@ -22,24 +25,6 @@ Plug 'junegunn/fzf.vim'
 " Initialize plugin system
 call plug#end()
 "
-"
-"" ----- Vundle ----- (required)
-"set nocompatible              " be iMproved, required
-"filetype off                  " required
-"
-"" set the runtime path to include Vundle and initialize
-"set rtp+=~/.vim/bundle/Vundle.vim
-"call vundle#begin()
-"" alternatively, pass a path where Vundle should install plugins
-""call vundle#begin('~/some/path/here')
-"
-"" let Vundle manage Vundle, required
-"Plugin 'VundleVim/Vundle.vim'
-"Plugin 'mileszs/ack.vim'
-"Plugin 'junegunn/fzf.vim'
-"" All of your Plugins must be added before the following line
-"call vundle#end()            " required
-"filetype plugin indent on    " required
 " ---------YOuCompleteMe----------
 "python with virtualenv support
 "py << EOF
@@ -55,7 +40,7 @@ call plug#end()
 " use fzf in vim
 set rtp+=/usr/local/opt/fzf
 
-" enable Ag 
+" ------- enable Ag ---------------
 let g:ackprg = 'ag --nogroup --nocolor --column'
 
 " grep
@@ -69,6 +54,10 @@ autocmd FileType vim setlocal commentstring=\"%s
 
 " ----------key mapping------------
 let g:mapleader=' '
+" quickly add a blankline below
+noremap <CR> o<Esc>
+" add blankline above
+noremap <C-CR> O<Esc>
 " exact search
 nnoremap <leader>\ /\<\><left><left>
 " comment line or block
@@ -99,11 +88,11 @@ noremap <leader>q :q<cr>
 " close all files
 noremap <leader>qa :qa<cr>
 "" force close a file
-noremap <leader>qQ :q!<cr>
+noremap <leader>Q :q!<cr>
 " quickly save a file in both normal and insert mode
 nnoremap <leader>s :w<cr>
 " source vimrc
-nnoremap <leader>S :so ~/.vimrc<cr>
+nnoremap <leader>so :so ~/github/dotfiles/.vimrc<cr>
 " save and quit
 noremap <leader>z ZZ
 " finding files using FZF
@@ -112,13 +101,16 @@ nnoremap <silent> <leader>f :FZF<cr>
 nnoremap <silent> <leader>F :FZF ~<cr>
 "quickly switch buffers
 nnoremap <Leader>b :ls<CR>:b<Space>
-nnoremap <C-t> :NERDTreeToggle<CR>
 " open terminal in verical window
 nnoremap <leader>t :vert term<CR>
 " install Plugin using vim-plug
 noremap <leader>pi :PlugInstall<CR>
 " toggle GitGutter
-noremap <leader>g :GitGutterToggle<CR>
+noremap <C-g> :GitGutterToggle<CR>
+" toggle undotree
+nnoremap <C-u> :UndotreeToggle<CR>
+" toggle nerdtree
+nnoremap <C-t> :NERDTreeToggle<CR>
 " -----  other options----------
 syntax on
 let python_highlight_all=1
@@ -146,3 +138,12 @@ if &diff
   colorscheme medic_chalk
   highlight! link DiffText MatchParen
 endif
+" ---- syntastic setting ---
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
+
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
