@@ -112,6 +112,9 @@ pc2proj() {
   \scp -rp $1 pshuai@cori.nersc.gov:/global/project/projectdirs/m1800/pin/"$2"
 }
 
+pc2proj-m3421() {
+  \scp -rp $1 pshuai@cori.nersc.gov:/global/project/projectdirs/m3421/pin/"$2"
+}
 cori2pc() {
   \scp -rp pshuai@cori.nersc.gov:/global/cscratch1/sd/pshuai/"$1" $2
 }
@@ -138,6 +141,11 @@ export fraser=/Users/shua784/Dropbox/PNNL/Projects/Fraser_hillslope
 #export PETSC_DIR=/Users/shua784/petsc
 #export PETSC_ARCH=arch-darwin-c-debug
 #alias pflotran='~/pflotran/src/pflotran/pflotran'
+export AMANZI_SRC_DIR=/Users/shua784/github/ats/repos/amanzi
+export ATS_SRC_DIR=/Users/shua784/github/ats/repos/amanzi/src/physics/ats
+export ATS_INPUT_SPEC=/Users/shua784/github/ats_input_spec
+export WW_DIR=/Users/shua784/github/watershed-workflow
+export MYFUNC_DIR=/Users/shua784/github/myfunctions
 
 #export PATH="/Applications/CMake.app/Contents/bin:$PATH"
 #export PATH="/Users/shua784/Dropbox/github/ats-debug/amanzi-install-master-Release/bin:$PATH"

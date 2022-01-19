@@ -54,10 +54,20 @@ autocmd FileType vim setlocal commentstring=\"%s
 
 " ----------key mapping------------
 let g:mapleader=' '
+" pretty format XML
+noremap <leader>pf :%!xmllint --format -<cr>
+" show history
+noremap <leader>h :History<CR>
+" show registers
+noremap <leader>r :reg<CR>
+" copy to clipboard
+vmap <C-c> "*y
+" paste from clipboard
+noremap <leader>v "*p
 " quickly add a blankline below
 noremap <CR> o<Esc>
 " add blankline above
-noremap <C-CR> O<Esc>
+noremap <leader><cr> O<Esc>
 " exact search
 nnoremap <leader>\ /\<\><left><left>
 " comment line or block
@@ -111,6 +121,22 @@ noremap <C-g> :GitGutterToggle<CR>
 nnoremap <C-u> :UndotreeToggle<CR>
 " toggle nerdtree
 nnoremap <C-t> :NERDTreeToggle<CR>
+" toggle line number
+noremap <C-n> :set number!<cr>
+" toggle syntastic
+nnoremap <C-s> :SyntasticCheck<CR>
+" search and replace current word, go to the word to be replaced and type the
+" command below
+nnoremap <leader>Rw yiw:%s#<C-r>"##g<left><left>
+nnoremap <leader>Rwc yiw:%s#<C-r>"##gc<left><left><left>
+" search and replace current characters within quotes with yanked text from
+" register y (use command "yy)
+nnoremap <leader>Ry yi":%s#<C-r>"#<C-r>y#g<CR>
+nnoremap <leader>Ryc yi":%s#<C-r>"#<C-r>y#gc<CR>
+nnoremap <leader>Rs yi":%s#<C-r>"##g<left><left>
+nnoremap <leader>Rsc yi":%s#<C-r>"##gc<left><left><left>
+
+
 " -----  other options----------
 syntax on
 let python_highlight_all=1
@@ -128,6 +154,7 @@ let g:jedi#rename_command = ""
 " fold xml tags
 let g:xml_syntax_folding=1
 au FileType xml setlocal foldmethod=syntax foldlevel=1 foldnestmax=10 nofoldenable
+au BufRead * normal zR
 " auto saving
 autocmd TextChanged,TextChangedI <buffer> silent write
 "colorscheme desertEx
@@ -142,8 +169,11 @@ endif
 " set statusline+=%#warningmsg#
 " set statusline+=%{SyntasticStatuslineFlag()}
 " set statusline+=%*
-
+let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': [] }
 " let g:syntastic_always_populate_loc_list = 1
 " let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+" let g:syntastic_check_on_open = 0
+" let g:syntastic_check_on_wq = 0
+"
+" ---- gitgutter setting ---
+:au VimEnter * :GitGutterDisable
