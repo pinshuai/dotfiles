@@ -1,5 +1,13 @@
 " -------vim-plug--------
+" install vim-plug if not already installed
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+" install plugins
 call plug#begin('~/.vim/plugged')
+" Plug 'instant-markdown/vim-instant-markdown', {'for': 'markdown', 'do': 'yarn install'}
 Plug 'mbbill/undotree'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-repeat'
@@ -102,7 +110,7 @@ noremap <leader>Q :q!<cr>
 " quickly save a file in both normal and insert mode
 nnoremap <leader>s :w<cr>
 " source vimrc
-nnoremap <leader>so :so ~/github/dotfiles/.vimrc<cr>
+nnoremap <leader>so :so ~/.vimrc<cr>
 " save and quit
 noremap <leader>z ZZ
 " finding files using FZF
@@ -117,7 +125,7 @@ nnoremap <leader>t :vert term<CR>
 noremap <leader>pi :PlugInstall<CR>
 " toggle GitGutter
 noremap <C-g> :GitGutterToggle<CR>
-" toggle undotree
+" toggle undotree; show changes in history
 nnoremap <C-u> :UndotreeToggle<CR>
 " toggle nerdtree
 nnoremap <C-t> :NERDTreeToggle<CR>
@@ -177,3 +185,20 @@ let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_
 "
 " ---- gitgutter setting ---
 :au VimEnter * :GitGutterDisable
+" ----match it setting---
+hi MatchWord ctermfg=red guifg=blue cterm=underline gui=underline
+" --- instant markdown setting----
+"Uncomment to override defaults:
+"this will set interactive bash as the default vim shell
+" autocmd FileType md set shell=bash\ -i  
+"let g:instant_markdown_slow = 1
+"let g:instant_markdown_autostart = 0
+"let g:instant_markdown_open_to_the_world = 1
+"let g:instant_markdown_allow_unsafe_content = 1
+"let g:instant_markdown_allow_external_content = 0
+"let g:instant_markdown_mathjax = 1
+"let g:instant_markdown_mermaid = 1
+"let g:instant_markdown_logfile = '/tmp/instant_markdown.log'
+"let g:instant_markdown_autoscroll = 0
+" let g:instant_markdown_port = 8855
+"let g:instant_markdown_python = 1

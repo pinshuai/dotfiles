@@ -42,6 +42,12 @@ alias nbv='open -a Jupyter\ Notebook\ Viewer'
 alias sshcon='ssh shua784@constance.pnl.gov'
 # bash function
 
+docker_prune() {
+    # prune docker containers and images
+docker container prune
+docker rmi $(docker images --filter "dangling=true" -q --no-trunc)
+}
+
 cgrep(){
 # search for keywords in files
 grep -ir --color "$1" ./*
@@ -96,7 +102,7 @@ echo "--Done!"
 }
 
 cdd() {
-cd $1 && ltr
+cd $1 && ls -ltrGFho
 }
 
 syncprj() {
@@ -141,16 +147,15 @@ export fraser=/Users/shua784/Dropbox/PNNL/Projects/Fraser_hillslope
 #export PETSC_DIR=/Users/shua784/petsc
 #export PETSC_ARCH=arch-darwin-c-debug
 #alias pflotran='~/pflotran/src/pflotran/pflotran'
+export PFLOTRAN_DIR=/Users/shua784/github/pflotran
 export AMANZI_SRC_DIR=/Users/shua784/github/ats/repos/amanzi
 export ATS_SRC_DIR=/Users/shua784/github/ats/repos/amanzi/src/physics/ats
 export ATS_INPUT_SPEC=/Users/shua784/github/ats_input_spec
 export WW_DIR=/Users/shua784/github/watershed-workflow
 export MYFUNC_DIR=/Users/shua784/github/myfunctions
 
-#export PATH="/Applications/CMake.app/Contents/bin:$PATH"
-#export PATH="/Users/shua784/Dropbox/github/ats-debug/amanzi-install-master-Release/bin:$PATH"
+export PATH="/Users/shua784/github/pflotran/src/pflotran/bin:$PATH"
 #export PATH="/Users/shua784/Dropbox/github/pflotran/src/pflotran/bin:$PATH"
-#export PATH="/Users/shua784/Dropbox/github/ats-debug/amanzi-install-master-Debug/bin:$PATH"
 export PATH="/Users/shua784/github/ats-land_cover/amanzi-install-master-Release/bin:$PATH"
 export PATH="/Users/shua784/github/ats/amanzi-install-master-Debug/bin:$PATH"
 export PATH="/Users/shua784/github/ats/amanzi-install-master-Release/bin:$PATH"
