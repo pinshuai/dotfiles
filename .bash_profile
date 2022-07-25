@@ -21,26 +21,34 @@ fi
 #export LSCOLORS=ExFxBxDxCxegedabagacad
 
 # add alias
-alias in='rg . | fzf --print0'  # use -e for exact match
+alias in='rg . | fzf --print0'  # use -e for exact match; use -u for unrestricted match (i.e., skip .ignore files)
+alias F='rg . --files --hidden --unrestricted | fzf --print0'
 alias cf='cdd $(fzf)'
 alias f='fzf'
 alias vf='nvim $(fzf)'
-alias vi='nvim'
+alias v='nvim'
 alias lls='ls -GFht'
 alias ltr='ls -ltrGFho'
+# alias l='ls -ltrGFho'
 alias pullmaster='git pull origin master'
 alias pushmaster='git push origin master'
 alias sshproxy='~/Dropbox/github/NERSC-MFA/sshproxy.sh -u pshuai'
 alias sshcori='ssh pshuai@cori.nersc.gov'
 alias sshycori='ssh -Y pshuai@cori.nersc.gov'
 alias sshedi='ssh pshuai@edison.nersc.gov'
-alias gitls='git status'
+# alias gitls='git status'
+# alias gstS="git status --porcelain | awk '{print $2}' | xargs ls -halFS" # order by file size in git status
 alias glf='git log --follow -p --'
 alias sshpl='ssh shua784@pinklady.pnl.gov'
 #alias cgrep='grep -ir --color'
 alias nbv='open -a Jupyter\ Notebook\ Viewer'
 alias sshcon='ssh shua784@constance.pnl.gov'
 # bash function
+
+# list the files to be staged in the order of file size
+gstS() {
+    git status --porcelain | awk '{print $2}' | xargs ls -halFS
+}
 
 docker_prune() {
     # prune docker containers and images
@@ -105,6 +113,10 @@ cdd() {
 cd $1 && ls -ltrGFho
 }
 
+c() {
+cd $1 && ls -ltrGFho
+}
+
 syncprj() {
 rsync -avh -e ssh pshuai@cori.nersc.gov:/global/project/projectdirs/m1800/pin/"$1" $2
 }
@@ -144,13 +156,15 @@ export NB=/Users/shua784/github
 export THORNE=/Users/shua784/Dropbox/PNNL/Projects/HFR-ugrid
 export PRJ=/Users/shua784/OneDrive\ -\ PNNL/Projects
 export fraser=/Users/shua784/Dropbox/PNNL/Projects/Fraser_hillslope
-#export PETSC_DIR=/Users/shua784/petsc
-#export PETSC_ARCH=arch-darwin-c-debug
+export PETSC_DIR=/Users/shua784/github/petsc_v3.16.2
+export PETSC_ARCH=arch-darwin-c-release
 #alias pflotran='~/pflotran/src/pflotran/pflotran'
 export PFLOTRAN_DIR=/Users/shua784/github/pflotran
 export AMANZI_SRC_DIR=/Users/shua784/github/ats/repos/amanzi
 export ATS_SRC_DIR=/Users/shua784/github/ats/repos/amanzi/src/physics/ats
 export ATS_INPUT_SPEC=/Users/shua784/github/ats_input_spec
+export WATERSHED_WORKFLOW_DATA_DIR=/Users/shua784/github/watershed-workflow/data_library 
+export WATERSHED_WORKFLOW_DIR=/Users/shua784/github/watershed-workflow
 export WW_DIR=/Users/shua784/github/watershed-workflow
 export MYFUNC_DIR=/Users/shua784/github/myfunctions
 
@@ -175,6 +189,7 @@ export PATH="/Users/shua784/github/ats/amanzi-install-master-Release/bin:$PATH"
 
 ## reset PYTHONPATH
 export PYTHONPATH=""
+export PYTHONPATH="${PYTHONPATH}:/Users/shua784/github/watershed-workflow"
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!

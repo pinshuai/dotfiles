@@ -18,8 +18,6 @@ setopt PUSHD_MINUS                 # exchange the meanings of '+' and '-'
 setopt CDABLE_VARS                 # expand the expression (allows 'cd -2/tmp')
 autoload -U compinit && compinit   # load + start completion
 zstyle ':completion:*:directory-stack' list-colors '=(#b) #([0-9]#)*( *)==95=38;5;12'
-alias scp='\scp'
-alias ss='source ~/.zshrc'
 
 gitpullpush() {
 ## echo "commit message:"
@@ -144,6 +142,9 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 #
 
+alias l='ls -ltrGFho'
+alias scp='\scp'
+alias ss='source ~/.zshrc'
 # cdd() {
 #cd $1
 #ls -ltr

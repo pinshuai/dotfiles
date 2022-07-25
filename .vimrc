@@ -69,7 +69,7 @@ noremap <leader>h :History<CR>
 " show registers
 noremap <leader>r :reg<CR>
 " copy to clipboard
-vmap <C-c> "*y
+vmap <C-c> "yy
 " paste from clipboard
 noremap <leader>v "*p
 " quickly add a blankline below
@@ -155,7 +155,7 @@ let g:jedi#completions_command = "<C-n>"
 let g:jedi#goto_command = ""
 let g:jedi#goto_assignments_command = ""
 let g:jedi#goto_stubs_command = ""
-let g:jedi#goto_definitions_command = ""
+let g:jedi#goto_definitions_command = "<leader>to"
 let g:jedi#documentation_command = ""
 let g:jedi#usages_command = ""
 let g:jedi#rename_command = ""
