@@ -33,7 +33,7 @@ alias ltr='ls -ltrGFho'
 alias pullmaster='git pull origin master'
 alias pushmaster='git push origin master'
 alias sshproxy='~/Dropbox/github/NERSC-MFA/sshproxy.sh -u pshuai'
-alias sshcori='ssh pshuai@cori.nersc.gov'
+alias sshcori='ssh -l pshuai -i ~/.ssh/nersc cori.nersc.gov'
 alias sshycori='ssh -Y pshuai@cori.nersc.gov'
 alias sshedi='ssh pshuai@edison.nersc.gov'
 # alias gitls='git status'
@@ -193,14 +193,14 @@ export PYTHONPATH="${PYTHONPATH}:/Users/shua784/github/watershed-workflow"
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/opt/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+__conda_setup="$('/Users/shuai/opt/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/opt/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/opt/anaconda3/etc/profile.d/conda.sh"
+    if [ -f "/Users/shuai/opt/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/shuai/opt/anaconda3/etc/profile.d/conda.sh"
     else
-        export PATH="/opt/anaconda3/bin:$PATH"
+        export PATH="/Users/shuai/opt/anaconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup

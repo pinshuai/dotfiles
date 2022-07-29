@@ -1,4 +1,9 @@
+#source ~/github/zsh-snap/znap.zsh
 source ~/.bash_profile
+
+# add auto complete for zsh
+source ~/github/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+#
 # get bash behavior of wildcard 
 # setopt nonomatch
 # prevent zsh to throw a no-match error
@@ -13,11 +18,11 @@ bindkey "[D" backward-word
 
 setopt extendedglob
 # store dirs history
-setopt AUTO_PUSHD                  # pushes the old directory onto the stack
-setopt PUSHD_MINUS                 # exchange the meanings of '+' and '-'
-setopt CDABLE_VARS                 # expand the expression (allows 'cd -2/tmp')
-autoload -U compinit && compinit   # load + start completion
-zstyle ':completion:*:directory-stack' list-colors '=(#b) #([0-9]#)*( *)==95=38;5;12'
+#setopt AUTO_PUSHD                  # pushes the old directory onto the stack
+#setopt PUSHD_MINUS                 # exchange the meanings of '+' and '-'
+#setopt CDABLE_VARS                 # expand the expression (allows 'cd -2/tmp')
+#autoload -U compinit && compinit   # load + start completion
+#zstyle ':completion:*:directory-stack' list-colors '=(#b) #([0-9]#)*( *)==95=38;5;12'
 
 gitpullpush() {
 ## echo "commit message:"
@@ -44,7 +49,7 @@ rjlab(){
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/shua784/.oh-my-zsh"
+export ZSH="/Users/shuai/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -186,14 +191,14 @@ eval "$(zoxide init zsh)"
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/opt/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$('/Users/shuai/opt/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/opt/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/opt/anaconda3/etc/profile.d/conda.sh"
+    if [ -f "/Users/shuai/opt/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/shuai/opt/anaconda3/etc/profile.d/conda.sh"
     else
-        export PATH="/opt/anaconda3/bin:$PATH"
+        export PATH="/Users/shuai/opt/anaconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup
