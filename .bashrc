@@ -1,4 +1,5 @@
 #begin .bashrc
+alias tmux="TERM=screen-256color-bce tmux"
 # set vim to use on the command line
 set -o vi
 
@@ -11,55 +12,67 @@ fi
 
 
 #export environment
-export M1800=/global/project/projectdirs/m1800
-export NB=/global/project/projectdirs/m1800/pin/github/
-export HFR=/global/project/projectdirs/m1800/pin/Reach_scale_model
-export PFLOTRAN=/global/project/projectdirs/pflotran
-export TH=/global/project/projectdirs/m1800/pin/HFR-thermal
-export THORNE=/global/project/projectdirs/m1800/pin/HFR-thorne
-export PRW=/global/project/projectdirs/m1800/pin/PriestRapidsWatershed
-export AT=/global/project/projectdirs/m1800/pin/AT-model
-export PFLOTRAN_EXE=/global/project/projectdirs/pflotran/pflotran-cori-new/src/pflotran/pflotran
-export PFLOTRAN_KNL_EXE=/global/project/projectdirs/m1800/pin/pflotran-knl/src/pflotran/pflotran
-export ATS_EXE=/global/project/projectdirs/m1800/pin/ats-012121/amanzi-install-master-Release/bin/ats-012121-c39571b
-export ATS_KNL_EXE=/global/project/projectdirs/m3421/ats-new/ats/install-master/cori-knl/intel-6.0.5-mpich-7.7.10/opt/bin/ats
-export ATS_intel_exe=/global/project/projectdirs/m3421/ats-new/ats/install-master/cori-haswell/intel-6.0.5-mpich-7.7.10/opt/bin/ats
-# export ATS_intel_landcover_exe=/global/project/projectdirs/m3421/ats-new/ats/install-ecoon-land_cover/cori-haswell/intel-6.0.5-mpich-7.7.10/opt/bin/ats
-#export ATS_ET=/global/project/projectdirs/m3421/ats-new/ats/install-master/cori-haswell/gnu-6.0.5-mpich-7.7.10/opt/bin/ats
-#export ATS_DEV=/global/project/projectdirs/m1800/pin/ats/ats-install-dev-trans-Release/bin/ats
-# export ATS_GNU_landcover=/global/project/projectdirs/m1800/pin/ats-land_cover/amanzi-install-master-Release/bin/ats
-
-export AMANZI_SRC_DIR=/global/project/projectdirs/m1800/pin/ats-geochem/repos/amanzi
-export ATS_SRC_DIR=/global/project/projectdirs/m1800/pin/ats-geochem/repos/amanzi/src/physics/ats
+export M1800=$CFS/m1800
+export M3421=$CFS/m3421
+export NB=$CFS/m1800/pin/github/
+export GITHUB_DIR=$CFS/m1800/pin/github/
+export HFR=$CFS/m1800/pin/Reach_scale_model
+export PFLOTRAN=$CFS/pflotran
+export TH=$CFS/m1800/pin/HFR-thermal
+export THORNE=$CFS/m1800/pin/HFR-thorne
+export PRW=$CFS/m1800/pin/PriestRapidsWatershed
+export AT=$CFS/m1800/pin/AT-model
+export PFLOTRAN_EXE=$CFS/pflotran/pflotran-cori-new/src/pflotran/pflotran
+export PFLOTRAN_KNL_EXE=$CFS/m1800/pin/pflotran-knl/src/pflotran/pflotran
+export ATS_GEOCHEM_EXE=$CFS/m1800/pin/ats-geochem-111821/amanzi-install-master-Release/bin/ats
+# export ATS_EXE=$CFS/m1800/pin/ats-012121/amanzi-install-master-Release/bin/ats-012121-c39571b
+export ATS_KNL_EXE=$CFS/m3421/ats-new/ats/install-master/cori-knl/intel-6.0.5-mpich-7.7.10/opt/bin/ats
+export ATS_HASWELL_EXE=$CFS/m3421/ats-new/ats/install-master/cori-haswell/intel-6.0.5-mpich-7.7.10/opt/bin/ats
+export ATS_HASWELL_V12=$CFS/m3421/ats-new/ats/install/amanzi-1.2+ats-1.2/cori-haswell/intel-6.0.5-mpich-7.7.10/opt/bin/ats
+export ATS_intel_exe=$CFS/m3421/ats-new/ats/install-master/cori-haswell/intel-6.0.5-mpich-7.7.10/opt/bin/ats
+export ATS_MODULE_FILE=$CFS/m3421/ats-new/modulefiles
+export MYFUNC_DIR=$CFS/m1800/pin/github/myfunctions
+export AMANZI_SRC_DIR=$CFS/m1800/pin/ats-geochem/repos/amanzi
+export ATS_SRC_DIR=$CFS/m1800/pin/ats-geochem/repos/amanzi/src/physics/ats
 # export PATHS
-#export PATH=$PATH:/global/project/projectdirs/m1800/pin/pflotran/pflotran-030821/src/pflotran/bin
-#export PATH=/global/project/projectdirs/m1800/pin/ats-012121/amanzi-install-master-Release/bin:$PATH
-#export PATH=/global/project/projectdirs/m1800/pin/ats-022221/amanzi-install-master-Release/bin:$PATH
-#export PATH=/global/project/projectdirs/m1800/pin/ats-land_cover/amanzi-install-master-Release/bin:$PATH
-#export PATH=/global/project/projectdirs/m1800/pin/ats-geochem/amanzi-install-master-Release/bin:$PATH
+#export PATH=$PATH:$CFS/m1800/pin/pflotran/pflotran-030821/src/pflotran/bin
+#export PATH=$CFS/m1800/pin/ats-012121/amanzi-install-master-Release/bin:$PATH
+#export PATH=$CFS/m1800/pin/ats-022221/amanzi-install-master-Release/bin:$PATH
+#export PATH=$CFS/m1800/pin/ats-land_cover/amanzi-install-master-Release/bin:$PATH
+#export PATH=$CFS/m1800/pin/ats-geochem/amanzi-install-master-Release/bin:$PATH
 
 alias csacct='sacct --format=JobID,partition,state,time,start,end,elapsed,nnodes,ncpus,nodelist,AllocTRES%32'  # show formatted job information
 alias in='rg . | fzf --print0'  # use -e for exact match
 alias cf='cdd $(fzf)'
 alias f='fzf'
 alias vf='vim $(fzf)'
+alias v='vim'
 
 alias lls='ls -GFht'
 alias ltr='ls -ltrGFho'
 alias pullmaster='git pull origin master'
 alias pushmaster='git push origin master'
 alias gitls='git status'
+alias glgf='git log -p --follow' # follow the file history
 alias cfind='find . -iname'
 alias cgrep='grep -ir --color'
 alias salloc1='salloc -N 1 -C haswell -q interactive -t 00:30:00 -L SCRATCH'
 alias srcbash='source ~/.bash_profile.ext'
 alias fc='ls -F | wc -l'
 alias ss='source ~/.zshrc'
+alias dus='du -h --max-depth=1 | sort -hr' # show a list of directory size and ranked from large to small
+alias sshperlmutter='ssh pshuai@perlmutter-p1.nersc.gov'
  #bash function
 xml_convert() {
-python /global/project/projectdirs/m1800/pin/ats-111620/repos/amanzi/src/physics/ats/tools/input_converters/xml-1.0-dev.xml $1 -o $2
+python $CFS/m1800/pin/ats-111620/repos/amanzi/src/physics/ats/tools/input_converters/xml-1.0-dev.xml $1 -o $2
 }
 
+# rank file by size in "git status"
+gstS () {
+	git status --porcelain | awk '{print $2}' | xargs ls -halFS
+}
+
+# show detailed branch information
 gitbr() {
   git for-each-ref --sort=committerdate refs/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'
 }
@@ -82,7 +95,7 @@ echo "--Done!"
 }
 
 
-cdd() {
+c() {
 cd $1 && ls -ltrGFho
 }
 
@@ -91,7 +104,11 @@ csalloc_m3421() {
 }
 
 csalloc() {
-  salloc -N $1 -C haswell -q interactive -t $2 -L SCRATCH
+  salloc -N $1 -C cpu -q interactive -t $2 -L SCRATCH -A m1800
+}
+
+csalloc_haswell() {
+  salloc -N $1 -C haswell -q interactive -t $2 -L SCRATCH -A m1800
 }
 
 csalloc_knl() {
@@ -119,7 +136,7 @@ srun -n $1 meshconvert --partition-method=2 $2 $3
 #}
 
 csrun_ats-geochem() {
-  srun -n $1 ats-geochem-031221 --xml_file=$2 2>&1 | tee ./run-$1-$( date '+%F_%H:%M:%S' ).log
+  srun -n $1 $ATS_GEOCHEM_EXE --xml_file=$2 2>&1 | tee ./run-$1-$( date '+%F_%H:%M:%S' ).log
 }
 # csrun_ats_GNU-landcover() {
 #   srun -n $1 $ATS_GNU_landcover --xml_file=$2 2>&1 | tee ./run-$1-$( date '+%F_%H:%M:%S' ).log
@@ -129,8 +146,13 @@ csrun_ats-geochem() {
 #   srun -n $1 $ATS_intel_landcover_exe --xml_file=$2 2>&1 | tee ./run-$1-$( date '+%F_%H:%M:%S' ).log
 # }
 csrun_ats() {
-  srun -n $1 $ATS_intel_exe --xml_file=$2 2>&1 | tee ./run-$1-$( date '+%F_%H:%M:%S' ).log
+  srun -n $1 $ATS_HASWELL_EXE --xml_file=$2 2>&1 | tee ./run-$1-$( date '+%F_%H:%M:%S' ).log
 }
+
+csrun_ats_v12() {
+  srun -n $1 $ATS_HASWELL_V12 --xml_file=$2 2>&1 | tee ./run-$1-$( date '+%F_%H:%M:%S' ).log
+}
+
 csrun_ats-knl() {
   srun -n $1 $ATS_KNL_EXE --xml_file=$2 2>&1 | tee ./run-$1-$( date '+%F_%H:%M:%S' ).log
 }

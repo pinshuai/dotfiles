@@ -15,8 +15,6 @@ setopt CDABLE_VARS                 # expand the expression (allows 'cd -2/tmp')
 autoload -U compinit && compinit   # load + start completion
 zstyle ':completion:*:directory-stack' list-colors '=(#b) #([0-9]#)*( *)==95=38;5;12'
 
-alias scp='\scp'
-alias ss='source ~/.zshrc'
 
 gitpullpush() {
 ## echo "commit message:"
@@ -133,7 +131,11 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-
+alias scp='\scp'
+alias ss='source ~/.zshrc'
+alias bfg='java -jar /global/project/projectdirs/m1800/pin/bfg/bfg-1.14.0.jar'
+alias l='ls -ltrGFho'
+alias v='vim'
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/usr/common/software/python/3.8-anaconda-2020.11/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"

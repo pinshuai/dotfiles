@@ -6,6 +6,7 @@ if empty(glob(data_dir . '/autoload/plug.vim'))
 endif
 " -------vim-plug--------
 call plug#begin('~/.vim/plugged')
+Plug 'mbbill/undotree'
 Plug 'Valloric/MatchTagAlways'
 Plug 'sukima/xmledit'
 Plug 'tpope/vim-unimpaired'
@@ -22,7 +23,7 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'preservim/nerdtree'
 Plug 'ParamagicDev/vim-medic_chalk'
 Plug 'google/vim-searchindex'
-Plug 'henrik/vim-indexed-search'
+" Plug 'henrik/vim-indexed-search'
 Plug 'mileszs/ack.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
@@ -30,9 +31,10 @@ Plug 'junegunn/fzf.vim'
 call plug#end()
 
 " -------- other settings---------
+filetype plugin indent on       " load file type plugins + indentation
 set showcmd
 syntax on
-colorscheme desert
+colorscheme desertEx
 
 " set number " show line number
 set hlsearch  "highlight search results"
@@ -44,7 +46,6 @@ set smartcase                   " ... unless they contain at least one capital l
 set tabstop=2 shiftwidth=2      " a tab is two spaces (or set this to 4)
 set expandtab                   " use spaces, not tabs (optional)
 set backspace=indent,eol,start  " backspace through everything in insert mode"
-filetype plugin indent on       " load file type plugins + indentation
 
 " " setting for py files
 " au BufNewFile,BufRead *.py
@@ -79,11 +80,13 @@ set grepprg=rg\ --vimgrep
 " ------------commentatory----------------
 autocmd FileType xml,html setlocal commentstring=<!--%s--> 
 autocmd FileType sh,python,text setlocal commentstring=#%s
-" ------------- other file type setting -----------
-autocmd FileType python setlocal tabstop=4 softtabstop=4 shiftwidth=4 textwidth=79 
+" ------------- python file type setting -----------
+autocmd FileType python setlocal tabstop=4 softtabstop=4 shiftwidth=4 
 
 "---------------KEY MAPPING---------------
 let g:mapleader=' '
+" show history
+noremap <leader>h :History<CR>
 " exact match
 nnoremap <leader>\ /\<\><left><left>
 noremap <leader>/ :Commentary<cr>
@@ -122,7 +125,7 @@ nnoremap <leader>so :so ~/.vimrc<cr>
 "save and quit
 noremap <leader>z ZZ
 " hide current file
-noremap <leader>h :hide<cr>
+" noremap <leader>h :hide<cr>
 " pretty format XML
 noremap <leader>pf :%!xmllint --format -<cr>
 " finding files using FZF
@@ -130,10 +133,14 @@ nnoremap <silent> <leader>f :FZF<cr>
 nnoremap <silent> <leader>F :FZF ~<cr>
 " toggle line number
 noremap <leader>n :set number!<cr>
-" copy to clipboard
-vmap <C-c> "*y
+" copy to register y
+vmap <C-c> "yy
+" paste from register y
+nnoremap <leader>v "yp
 " quickly switch buffers
 nnoremap <Leader>b :ls<CR>:b<Space>
+" toggle undotree; show changes in history
+nnoremap <C-u> :UndotreeToggle<CR>
 " toggle NERDTree
 nnoremap <C-t> :NERDTreeToggle<CR>
 " open terminal in verical window
@@ -142,6 +149,8 @@ nnoremap <leader>t :vert term<CR>
 noremap <leader>pi :PlugInstall<CR>
 " toggle GitGutter
 noremap <leader>git :GitGutterToggle<CR>
+" add blankline above
+noremap <leader><cr> O<Esc>
 " quickly add a blankline
 noremap <CR> o<Esc>
 " open registers
@@ -183,3 +192,6 @@ au FileType xml setlocal foldmethod=syntax foldlevel=1 foldnestmax=10 nofoldenab
 set laststatus=2
 set statusline+=%F
 set clipboard+=unnamed
+
+" ----git gutter setting---
+:au VimEnter * :GitGutterDisable

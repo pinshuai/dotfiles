@@ -135,6 +135,7 @@ export NB=/Users/shua784/github
 export THORNE=/Users/shua784/Dropbox/PNNL/Projects/HFR-ugrid
 export PRJ=/Users/shua784/OneDrive\ -\ PNNL/Projects
 export fraser=/Users/shua784/Dropbox/PNNL/Projects/Fraser_hillslope
+export MYFUNC_DIR=/global/project/projectdirs/m1800/pin/github/myfunctions
 #export PETSC_DIR=/Users/shua784/petsc
 #export PETSC_ARCH=arch-darwin-c-debug
 #alias pflotran='~/pflotran/src/pflotran/pflotran'
