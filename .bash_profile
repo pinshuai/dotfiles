@@ -34,6 +34,7 @@ alias pullmaster='git pull origin master'
 alias pushmaster='git push origin master'
 alias sshproxy='~/Dropbox/github/NERSC-MFA/sshproxy.sh -u pshuai'
 alias sshcori='ssh -l pshuai -i ~/.ssh/nersc cori.nersc.gov'
+alias sshperlmutter='ssh pshuai@perlmutter-p1.nersc.gov'
 alias sshycori='ssh -Y pshuai@cori.nersc.gov'
 alias sshedi='ssh pshuai@edison.nersc.gov'
 # alias gitls='git status'
@@ -141,6 +142,14 @@ pc2cori() {
  scp -rp $1 pshuai@cori.nersc.gov:/global/cscratch1/sd/pshuai/"$2"
 }
 
+pc2chpc() {
+ scp -rp $1 u6046326@notchpeak1.chpc.utah.edu:/uufs/chpc.utah.edu/common/home/u6046326/"$2"
+}
+
+chpc2pc() {
+ scp -rp u6046326@notchpeak1.chpc.utah.edu:/uufs/chpc.utah.edu/common/home/u6046326/"$1" $2
+}
+
 pl2pc() {
  \scp -rp shua784@pinklady.pnl.gov:"$1" $2
 }
@@ -149,30 +158,31 @@ pc2pl() {
   \scp -rp $1 shua784@pinklady.pnl.gov:"$2"
 }
 # add shortcut
-export HFR=/Users/shua784/Dropbox/PNNL/Projects/Reach_scale_model
-export AT=/Users/shua784/Dropbox/PNNL/Projects/AT-model
-export TH=/Users/shua784/Dropbox/PNNL/Projects/HFR-thermal
-export NB=/Users/shua784/github
-export THORNE=/Users/shua784/Dropbox/PNNL/Projects/HFR-ugrid
-export PRJ=/Users/shua784/OneDrive\ -\ PNNL/Projects
-export fraser=/Users/shua784/Dropbox/PNNL/Projects/Fraser_hillslope
-export PETSC_DIR=/Users/shua784/github/petsc_v3.16.2
-export PETSC_ARCH=arch-darwin-c-release
-#alias pflotran='~/pflotran/src/pflotran/pflotran'
-export PFLOTRAN_DIR=/Users/shua784/github/pflotran
-export AMANZI_SRC_DIR=/Users/shua784/github/ats/repos/amanzi
-export ATS_SRC_DIR=/Users/shua784/github/ats/repos/amanzi/src/physics/ats
-export ATS_INPUT_SPEC=/Users/shua784/github/ats_input_spec
-export WATERSHED_WORKFLOW_DATA_DIR=/Users/shua784/github/watershed-workflow/data_library 
-export WATERSHED_WORKFLOW_DIR=/Users/shua784/github/watershed-workflow
-export WW_DIR=/Users/shua784/github/watershed-workflow
-export MYFUNC_DIR=/Users/shua784/github/myfunctions
+#export HFR=/Users/shua784/Dropbox/PNNL/Projects/Reach_scale_model
+#export AT=/Users/shua784/Dropbox/PNNL/Projects/AT-model
+#export TH=/Users/shua784/Dropbox/PNNL/Projects/HFR-thermal
+export NB=$HOME/github
+#export THORNE=/Users/shua784/Dropbox/PNNL/Projects/HFR-ugrid
+#export PRJ=/Users/shua784/OneDrive\ -\ PNNL/Projects
+#export fraser=/Users/shua784/Dropbox/PNNL/Projects/Fraser_hillslope
+#export PETSC_DIR=/Users/shua784/github/petsc_v3.16.2
+#export PETSC_ARCH=arch-darwin-c-release
+##alias pflotran='~/pflotran/src/pflotran/pflotran'
+#export PFLOTRAN_DIR=/Users/shua784/github/pflotran
+#export AMANZI_SRC_DIR=/Users/shua784/github/ats/repos/amanzi
+#export ATS_SRC_DIR=/Users/shua784/github/ats/repos/amanzi/src/physics/ats
+#export ATS_INPUT_SPEC=/Users/shua784/github/ats_input_spec
 
-export PATH="/Users/shua784/github/pflotran/src/pflotran/bin:$PATH"
-#export PATH="/Users/shua784/Dropbox/github/pflotran/src/pflotran/bin:$PATH"
-export PATH="/Users/shua784/github/ats-land_cover/amanzi-install-master-Release/bin:$PATH"
-export PATH="/Users/shua784/github/ats/amanzi-install-master-Debug/bin:$PATH"
-export PATH="/Users/shua784/github/ats/amanzi-install-master-Release/bin:$PATH"
+export WATERSHED_WORKFLOW_DATA_DIR=$HOME/github/watershed-workflow/data_library 
+export WATERSHED_WORKFLOW_DIR=$HOME/github/watershed-workflow
+# export WW_DIR=/Users/shua784/github/watershed-workflow
+# export MYFUNC_DIR=/Users/shua784/github/myfunctions
+
+#export PATH="/Users/shua784/github/pflotran/src/pflotran/bin:$PATH"
+##export PATH="/Users/shua784/Dropbox/github/pflotran/src/pflotran/bin:$PATH"
+#export PATH="/Users/shua784/github/ats-land_cover/amanzi-install-master-Release/bin:$PATH"
+#export PATH="/Users/shua784/github/ats/amanzi-install-master-Debug/bin:$PATH"
+#export PATH="/Users/shua784/github/ats/amanzi-install-master-Release/bin:$PATH"
 #add python path for running pvGEO plugin in ParaView
 ##export PYTHONPATH="${PYTHONPATH}:/opt/anaconda3/envs/pvgeoenv/lib/python2.7/site-packages"
 # export PV_PLUGIN_PATH="/opt/anaconda3/envs/pvgeoenv/lib/python2.7/site-packages/PVPlugins"
@@ -188,8 +198,8 @@ export PATH="/Users/shua784/github/ats/amanzi-install-master-Release/bin:$PATH"
 
 
 ## reset PYTHONPATH
-export PYTHONPATH=""
-export PYTHONPATH="${PYTHONPATH}:/Users/shua784/github/watershed-workflow"
+# export PYTHONPATH=""
+# export PYTHONPATH="${PYTHONPATH}:/Users/shua784/github/watershed-workflow"
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
