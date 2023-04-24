@@ -4,6 +4,13 @@ source ~/.bash_profile
 # add auto complete for zsh
 source ~/github/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 #
+
+# Load rbenv automatically by appending
+# the following to ~/.zshrc:
+
+eval "$(rbenv init - zsh)"
+#
+#
 # get bash behavior of wildcard 
 # setopt nonomatch
 # prevent zsh to throw a no-match error
@@ -206,3 +213,6 @@ unset __conda_setup
 
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
+source /opt/homebrew/opt/chruby/share/chruby/auto.sh
+chruby ruby-3.1.3
