@@ -8,6 +8,11 @@ endif
 " install plugins
 call plug#begin('~/.vim/plugged')
 " Plug 'instant-markdown/vim-instant-markdown', {'for': 'markdown', 'do': 'yarn install'}
+" highlight yanked region
+Plug 'machakann/vim-highlightedyank'
+" motion plugin
+Plug 'easymotion/vim-easymotion'
+Plug 'justinmk/vim-sneak'
 Plug 'mbbill/undotree'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-repeat'
@@ -32,7 +37,32 @@ Plug 'mileszs/ack.vim'
 Plug 'junegunn/fzf.vim'
 " Initialize plugin system
 call plug#end()
-"
+" --------Easy Motion config-------
+let g:EasyMotion_do_mapping = 0 " Disable default mappings
+
+" Jump to anywhere you want with minimal keystrokes, with just one key binding.
+" `s{char}{label}`
+" nmap s <Plug>(easymotion-overwin-f)
+" or
+" `s{char}{char}{label}`
+" Need one more keystroke, but on average, it may be more comfortable.
+nmap s <Plug>(easymotion-overwin-f2)
+
+" Turn on case-insensitive feature
+let g:EasyMotion_smartcase = 1
+
+" JK motions: Line motions
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
+map <Leader>w <Plug>(easymotion-w)
+map <Leader>W <Plug>(easymotion-W)
+map <Leader>b <Plug>(easymotion-b)
+map <Leader>B <Plug>(easymotion-B)
+map <Leader>e <Plug>(easymotion-e)
+map <Leader>E <Plug>(easymotion-E)
+map <Leader>n <Plug>(easymotion-n)
+map <Leader>N <Plug>(easymotion-N)
+
 " ---------YOuCompleteMe----------
 "python with virtualenv support
 "py << EOF
@@ -46,8 +76,14 @@ call plug#end()
 ""
 " ----------FZF---------------------
 " use fzf in vim
-set rtp+=/usr/local/opt/fzf
-
+" set rtp+=/usr/local/opt/fzf
+set rtp+=/opt/homebrew/opt/fzf"
+" incremental search
+set incsearch
+" highlight search results
+set hlsearch
+" set highlight forground and background colors
+hi Search cterm=NONE ctermfg=white ctermbg=darkblue
 " ------- enable Ag ---------------
 let g:ackprg = 'ag --nogroup --nocolor --column'
 
@@ -126,7 +162,7 @@ noremap <leader>pi :PlugInstall<CR>
 " toggle GitGutter
 noremap <C-g> :GitGutterToggle<CR>
 " toggle undotree; show changes in history
-nnoremap <C-u> :UndotreeToggle<CR>
+nnoremap <Leader>u :UndotreeToggle<CR>
 " toggle nerdtree
 nnoremap <C-t> :NERDTreeToggle<CR>
 " toggle line number
@@ -166,8 +202,6 @@ au BufRead * normal zR
 " auto saving
 autocmd TextChanged,TextChangedI <buffer> silent write
 "colorscheme desertEx
-"set hlsearch
-"hi Search cterm=NONE ctermfg=grey ctermbg=blue
 " --------use with vimdiff--------
 if &diff
   colorscheme medic_chalk
