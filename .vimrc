@@ -204,6 +204,8 @@ autocmd TextChanged,TextChangedI <buffer> silent write
 "colorscheme desertEx
 " --------use with vimdiff--------
 if &diff
+" --------use with vimdiff--------
+if &diff
   colorscheme medic_chalk
   highlight! link DiffText MatchParen
 endif
