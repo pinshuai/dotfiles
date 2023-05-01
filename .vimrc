@@ -6,6 +6,11 @@ if empty(glob(data_dir . '/autoload/plug.vim'))
 endif
 " -------vim-plug--------
 call plug#begin('~/.vim/plugged')
+" highlight yanked region
+Plug 'machakann/vim-highlightedyank'
+" motion plugin
+Plug 'easymotion/vim-easymotion'
+Plug 'justinmk/vim-sneak'
 Plug 'mbbill/undotree'
 Plug 'Valloric/MatchTagAlways'
 Plug 'sukima/xmledit'
@@ -29,7 +34,31 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 " Initialize plugin system
 call plug#end()
+" --------Easy Motion config-------
+let g:EasyMotion_do_mapping = 0 " Disable default mappings
 
+" Jump to anywhere you want with minimal keystrokes, with just one key binding.
+" `s{char}{label}`
+" nmap s <Plug>(easymotion-overwin-f)
+" or
+" `s{char}{char}{label}`
+" Need one more keystroke, but on average, it may be more comfortable.
+nmap s <Plug>(easymotion-overwin-f2)
+
+" Turn on case-insensitive feature
+let g:EasyMotion_smartcase = 1
+
+" JK motions: Line motions
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
+map <Leader>w <Plug>(easymotion-w)
+map <Leader>W <Plug>(easymotion-W)
+map <Leader>b <Plug>(easymotion-b)
+map <Leader>B <Plug>(easymotion-B)
+map <Leader>e <Plug>(easymotion-e)
+map <Leader>E <Plug>(easymotion-E)
+map <Leader>n <Plug>(easymotion-n)
+map <Leader>N <Plug>(easymotion-N)
 " -------- other settings---------
 filetype plugin indent on       " load file type plugins + indentation
 set showcmd
@@ -79,7 +108,7 @@ set grepprg=rg\ --vimgrep
 
 " ------------commentatory----------------
 autocmd FileType xml,html setlocal commentstring=<!--%s--> 
-autocmd FileType sh,python,text setlocal commentstring=#%s
+autocmd FileType sh,python,text,in setlocal commentstring=#%s
 " ------------- python file type setting -----------
 autocmd FileType python setlocal tabstop=4 softtabstop=4 shiftwidth=4 
 
@@ -89,7 +118,10 @@ let g:mapleader=' '
 noremap <leader>h :History<CR>
 " exact match
 nnoremap <leader>\ /\<\><left><left>
+" comment line
 noremap <leader>/ :Commentary<cr>
+" group comment lines that contain current words
+nnoremap <leader>Cw yiw:%s/^.*<C-r>".*$/\# &/
 " toggle between edit and normal mode
 inoremap jj <Esc>
 " copy and paste paragraph below
@@ -155,6 +187,9 @@ noremap <leader><cr> O<Esc>
 noremap <CR> o<Esc>
 " open registers
 noremap <leader>r :registers<CR>
+" search yanked texts
+vmap / y:/<C-r>"<CR>
+
 " search and replace current word, go to the word to be replaced and type the
 " command below
 nnoremap <leader>Rw yiw:%s#<C-r>"##g<left><left>
@@ -165,6 +200,9 @@ nnoremap <leader>Ry yi":%s#<C-r>"#<C-r>y#g<CR>
 nnoremap <leader>Ryc yi":%s#<C-r>"#<C-r>y#gc<CR>
 nnoremap <leader>Rs yi":%s#<C-r>"##g<left><left>
 nnoremap <leader>Rsc yi":%s#<C-r>"##gc<left><left><left>
+
+" fold based on skip-noskip
+noremap ski :setlocal foldmethod=expr foldexpr=FoldOnKeyword()<CR>
 " quickly move cursor
 " noremap jj 12j
 " noremap kk 12k
@@ -183,6 +221,51 @@ let g:jedi#goto_definitions_command = "<leader>d"
 let g:jedi#documentation_command = ""
 let g:jedi#usages_command = "<leader>u"
 let g:jedi#rename_command = "<leader>r"
+
+" define a general fold method
+set foldmethod=indent   " fold based on indent
+" autocmd FileType vim setlocal foldmethod=marker  " fold using marker (e.g., comments)
+
+" fold using custom expression for PFLOTRAN.in file
+au BufNewFile,BufRead *.in set filetype=in
+" au FileType in setlocal foldmethod=expr
+" au FileType in setlocal foldexpr=InFolds()   " fold lines starting with #
+" au FileType in setlocal foldexpr=getline(v:lnum)[0]=='\#'   " fold lines starting with #
+" define a new function for the fold method: 1) fold when line starts with #;
+" 2) fold when indent
+function! InFolds()
+  let thisline = getline(v:lnum)
+  " when line is empty, use the fold level before or after this line
+  " if thisline =~? '\v^\s*$'  
+  "   return '-1'
+  " endif
+  " fold when line starts with #
+  if thisline =~ '^\#\ .*$'
+    return 1
+  " elseif thisline =~ '^skip.*$'
+  "   return '>1'
+  " elseif thisline =~ '^noskip.*$'
+  "   return '<1'
+  else
+    " fold when indent
+    return indent(v:lnum) / &shiftwidth
+  endif
+endfunction
+" fold based on keywords (skip --> noskip)
+function! FoldOnKeyword()
+    let line = getline(v:lnum)
+    if a:line == 'skip'
+        " A level 1 fold starts here; cp :help fold-expr
+        return '>1'
+    elseif a:line == 'noskip'
+        " A level 1 fold ends here
+        return '<1'
+    else
+        " Use fold level from previous line
+        return '='
+    endif
+endfunction
+" setlocal foldmethod=expr foldexpr=FoldOnKeyword()
 
 " fold xml tags (foldlevel default to 1; max fold =10; nofoldenable, do not
 " fold by default)
