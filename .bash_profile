@@ -23,7 +23,7 @@ export LSCOLORS=ExFxBxDxCxegedabagacad
 # add alias
 alias in='rg . | fzf --print0'  # use -e for exact match; use -u for unrestricted match (i.e., skip .ignore files)
 alias F='rg . --files --hidden --unrestricted | fzf --print0'
-alias cf='cdd $(fzf)'
+alias cf='cdd $(fd -t d . $HOME | fzf)'
 alias f='fzf'
 alias vf='nvim $(fzf)'
 alias v='nvim'
@@ -44,6 +44,7 @@ alias sshpl='ssh shua784@pinklady.pnl.gov'
 #alias cgrep='grep -ir --color'
 alias nbv='open -a Jupyter\ Notebook\ Viewer'
 alias sshcon='ssh shua784@constance.pnl.gov'
+alias bfg="java -jar ~/Dropbox/Software/BFG/bfg-1.14.0.jar"
 # bash function
 
 # list the files to be staged in the order of file size
@@ -84,6 +85,9 @@ run_ats(){
 mpirun -n $1 ats-land_cover --xml_file=$2 2>&1 | tee ./run-$1-$( date '+%F_%H:%M:%S' ).log
 }
 
+run_pf1(){
+$PFLOTRAN_EXE -pflotranin $1 2>&1 | tee ./run-$( date '+%F_%H:%M:%S' ).log
+}
 runpf(){
   /Users/shua784/Dropbox/github/petsc_v3.13/arch-darwin-c-release/bin/mpirun -np $1 pflotran_v3.0-beta -pflotranin $2  >& 8.stdout}
 
@@ -134,19 +138,36 @@ pc2proj() {
 pc2proj-m3421() {
   \scp -rp $1 pshuai@cori.nersc.gov:/global/project/projectdirs/m3421/pin/"$2"
 }
+
 cori2pc() {
   \scp -rp pshuai@cori.nersc.gov:/global/cscratch1/sd/pshuai/"$1" $2
+}
+
+pc2pm() {
+  \scp -rp $1 pshuai@perlmutter-p1.nersc.gov:/pscratch/sd/p/pshuai/"$2"
+}
+
+pm2pc() {
+  \scp -rp pshuai@perlmutter-p1.nersc.gov:/pscratch/sd/p/pshuai/"$1" $2
 }
 
 pc2cori() {
  scp -rp $1 pshuai@cori.nersc.gov:/global/cscratch1/sd/pshuai/"$2"
 }
 
-pc2chpc() {
+pc2chpc_nfs() {
+ scp -rp $1 u6046326@notchpeak1.chpc.utah.edu:/scratch/general/nfs1/pshuai/"$2"
+}
+
+chpc_nfs2pc() {
+ scp -rp u6046326@notchpeak1.chpc.utah.edu:/scratch/general/nfs1/pshuai/"$1" $2
+}
+
+pc2chpc_home() {
  scp -rp $1 u6046326@notchpeak1.chpc.utah.edu:/uufs/chpc.utah.edu/common/home/u6046326/"$2"
 }
 
-chpc2pc() {
+chpc_home2pc() {
  scp -rp u6046326@notchpeak1.chpc.utah.edu:/uufs/chpc.utah.edu/common/home/u6046326/"$1" $2
 }
 
@@ -161,7 +182,6 @@ pc2pl() {
 #export HFR=/Users/shua784/Dropbox/PNNL/Projects/Reach_scale_model
 #export AT=/Users/shua784/Dropbox/PNNL/Projects/AT-model
 #export TH=/Users/shua784/Dropbox/PNNL/Projects/HFR-thermal
-export NB=$HOME/github
 #export THORNE=/Users/shua784/Dropbox/PNNL/Projects/HFR-ugrid
 #export PRJ=/Users/shua784/OneDrive\ -\ PNNL/Projects
 #export fraser=/Users/shua784/Dropbox/PNNL/Projects/Fraser_hillslope
@@ -170,7 +190,12 @@ export NB=$HOME/github
 ##alias pflotran='~/pflotran/src/pflotran/pflotran'
 #export PFLOTRAN_DIR=/Users/shua784/github/pflotran
 #export AMANZI_SRC_DIR=/Users/shua784/github/ats/repos/amanzi
-#export ATS_SRC_DIR=/Users/shua784/github/ats/repos/amanzi/src/physics/ats
+
+export NB=$HOME/github
+export ATS_SRC_DIR=$NB/ats
+export AMANZI_SRC_DIR=$NB/amanzi
+
+
 #export ATS_INPUT_SPEC=/Users/shua784/github/ats_input_spec
 
 export WATERSHED_WORKFLOW_DATA_DIR=$HOME/github/watershed-workflow/data_library 
@@ -188,6 +213,9 @@ export WATERSHED_WORKFLOW_DIR=$HOME/github/watershed-workflow
 # export PV_PLUGIN_PATH="/opt/anaconda3/envs/pvgeoenv/lib/python2.7/site-packages/PVPlugins"
 #export PYTHONPATH="/opt/anaconda3/envs/pvgeoenv/lib/python2.7/site-packages"
 
+# add python path for ats
+export PYTHONPATH="${PYTHONPATH}:$ATS_SRC_DIR/tools/utils"
+
 # add python path for watershed_workfow
 #export PYTHONPATH="${PYTHONPATH}:/Users/shua784/Dropbox/github/watershed-workflow"
 #export PYTHONPATH="${PYTHONPATH}:/Users/shua784/Dropbox/github/watershed-workflow/workflow_tpls"
@@ -200,6 +228,26 @@ export WATERSHED_WORKFLOW_DIR=$HOME/github/watershed-workflow
 ## reset PYTHONPATH
 # export PYTHONPATH=""
 # export PYTHONPATH="${PYTHONPATH}:/Users/shua784/github/watershed-workflow"
+
+# ========== API keys (do not share) ===============
+# WaDE
+export WADE_API_KEY='***REMOVED***'
+# ========= Username/Passwords (CONFIDENTIAL) =======
+# AppEEARS
+export APPEEARS_USERNAME='pshuai'
+export APPEEARS_PASSWORD='***REMOVED***'
+
+#=========add pflotran short course related vars=================
+export PATH="/opt/homebrew/bin:$PATH"  
+export PETSC_DIR==$NB/petsc
+export PETSC_ARCH=arch-darwin-c-opt  
+export PFLOTRAN_DIR=$NB/pflotran
+export dfnworks_DIR=$NB/dfnWorks 
+export PFLOTRAN_EXE=$PFLOTRAN_DIR/src/pflotran/pflotran 
+export LAGRIT_EXE=$NB/LaGriT/build/lagrit 
+export DFNGEN_EXE=$dfnworks_DIR/DFNGen/DFNGen 
+export PATH="$NB/Dakota/software/dakota/bin:$PATH"
+
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!

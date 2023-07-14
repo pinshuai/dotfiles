@@ -42,26 +42,15 @@ let g:EasyMotion_do_mapping = 0 " Disable default mappings
 
 " Jump to anywhere you want with minimal keystrokes, with just one key binding.
 " `s{char}{label}`
-" nmap s <Plug>(easymotion-overwin-f)
+nmap s <Plug>(easymotion-overwin-f)
 " or
 " `s{char}{char}{label}`
 " Need one more keystroke, but on average, it may be more comfortable.
-nmap s <Plug>(easymotion-overwin-f2)
+nmap ss <Plug>(easymotion-overwin-f2)
 
 " Turn on case-insensitive feature
 let g:EasyMotion_smartcase = 1
 
-" JK motions: Line motions
-map <Leader>j <Plug>(easymotion-j)
-map <Leader>k <Plug>(easymotion-k)
-map <Leader>w <Plug>(easymotion-w)
-map <Leader>W <Plug>(easymotion-W)
-map <Leader>b <Plug>(easymotion-b)
-map <Leader>B <Plug>(easymotion-B)
-map <Leader>e <Plug>(easymotion-e)
-map <Leader>E <Plug>(easymotion-E)
-map <Leader>n <Plug>(easymotion-n)
-map <Leader>N <Plug>(easymotion-N)
 
 " ---------YOuCompleteMe----------
 "python with virtualenv support
@@ -82,6 +71,9 @@ set rtp+=/opt/homebrew/opt/fzf"
 set incsearch
 " highlight search results
 set hlsearch
+" make search smarter
+set ignorecase
+set smartcase
 " set highlight forground and background colors
 hi Search cterm=NONE ctermfg=white ctermbg=darkblue
 " ------- enable Ag ---------------
@@ -154,7 +146,7 @@ noremap <leader>z ZZ
 nnoremap <silent> <leader>f :FZF<cr>
 nnoremap <silent> <leader>F :FZF ~<cr>
 "quickly switch buffers
-nnoremap <Leader>b :ls<CR>:b<Space>
+nnoremap <Leader>bu :ls<CR>:b<Space>
 " open terminal in verical window
 nnoremap <leader>t :vert term<CR>
 " install Plugin using vim-plug
@@ -179,22 +171,38 @@ nnoremap <leader>Ry yi":%s#<C-r>"#<C-r>y#g<CR>
 nnoremap <leader>Ryc yi":%s#<C-r>"#<C-r>y#gc<CR>
 nnoremap <leader>Rs yi":%s#<C-r>"##g<left><left>
 nnoremap <leader>Rsc yi":%s#<C-r>"##gc<left><left><left>
+" quickly move to the begining and end of line; this will override the cursor
+" motion for top/bottom
+nmap H ^
+nmap L $
+" remove search highlight
+nmap <F9> :nohl
 
-
+" JK motions: Line motions
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
+map <Leader>w <Plug>(easymotion-w)
+map <Leader>W <Plug>(easymotion-W)
+map <Leader>b <Plug>(easymotion-b)
+map <Leader>B <Plug>(easymotion-B)
+map <Leader>e <Plug>(easymotion-e)
+map <Leader>E <Plug>(easymotion-E)
+map <Leader>n <Plug>(easymotion-n)
+map <Leader>N <Plug>(easymotion-N)
 " -----  other options----------
 syntax on
 let python_highlight_all=1
 let g:SimpylFold_docstring_preview = 1
-" Jedi-vim auto completion commands
-let g:jedi#environment_path = "/opt/anaconda3/bin/python"
-let g:jedi#completions_command = "<C-n>"
-let g:jedi#goto_command = ""
-let g:jedi#goto_assignments_command = ""
-let g:jedi#goto_stubs_command = ""
-let g:jedi#goto_definitions_command = "<leader>to"
-let g:jedi#documentation_command = ""
-let g:jedi#usages_command = ""
-let g:jedi#rename_command = ""
+" " Jedi-vim auto completion commands
+" let g:jedi#environment_path = "/opt/anaconda3/bin/python"
+" let g:jedi#completions_command = "<C-n>"
+" let g:jedi#goto_command = ""
+" let g:jedi#goto_assignments_command = ""
+" let g:jedi#goto_stubs_command = ""
+" let g:jedi#goto_definitions_command = "<leader>to"
+" let g:jedi#documentation_command = ""
+" let g:jedi#usages_command = ""
+" let g:jedi#rename_command = ""
 " fold xml tags
 let g:xml_syntax_folding=1
 au FileType xml setlocal foldmethod=syntax foldlevel=1 foldnestmax=10 nofoldenable
