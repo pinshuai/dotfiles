@@ -231,11 +231,11 @@ export PYTHONPATH="${PYTHONPATH}:$ATS_SRC_DIR/tools/utils"
 
 # ========== API keys (do not share) ===============
 # WaDE
-export WADE_API_KEY='***REMOVED***'
+export WADE_API_KEY=
 # ========= Username/Passwords (CONFIDENTIAL) =======
 # AppEEARS
-export APPEEARS_USERNAME='pshuai'
-export APPEEARS_PASSWORD='***REMOVED***'
+export APPEEARS_USERNAME=
+export APPEEARS_PASSWORD=
 
 #=========add pflotran short course related vars=================
 export PATH="/opt/homebrew/bin:$PATH"  
