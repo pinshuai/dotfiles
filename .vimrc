@@ -1,8 +1,22 @@
+" Enable type file detection. Vim will be able to try to detect the type of file in use.
+filetype on
+
+" Enable plugins and load plugin for the detected file type.
+filetype plugin on
+
+" Load an indent file for the detected file type.
+filetype indent on
 " -------vim-plug--------
 " install vim-plug if not already installed
 let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
 if empty(glob(data_dir . '/autoload/plug.vim'))
   silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+" install colorschemes
+if empty(glob('~/.vim/colors/desertEx.vim'))
+  silent execute '!curl -fLo ~/.vim/colors/desertEx.vim --create-dirs https://raw.githubusercontent.com/mbbill/desertEx/master/colors/desertEx.vim '
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 " install plugins
@@ -67,6 +81,8 @@ let g:EasyMotion_smartcase = 1
 " use fzf in vim
 " set rtp+=/usr/local/opt/fzf
 set rtp+=/opt/homebrew/opt/fzf"
+" Disable compatibility with vi which can cause unexpected issues.
+set nocompatible
 " incremental search
 set incsearch
 " highlight search results
@@ -74,6 +90,10 @@ set hlsearch
 " make search smarter
 set ignorecase
 set smartcase
+" Show partial command you type in the last line of the screen.
+set showcmd
+" Set the commands to save in history default number is 20.
+set history=1000
 " set highlight forground and background colors
 hi Search cterm=NONE ctermfg=white ctermbg=darkblue
 " ------- enable Ag ---------------
@@ -178,6 +198,9 @@ nmap L $
 " remove search highlight
 nmap <F9> :nohl
 
+" Center the cursor vertically when moving to the next word during a search.
+nnoremap n nzz
+nnoremap N Nzz
 " JK motions: Line motions
 map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
@@ -209,7 +232,7 @@ au FileType xml setlocal foldmethod=syntax foldlevel=1 foldnestmax=10 nofoldenab
 au BufRead * normal zR
 " auto saving
 autocmd TextChanged,TextChangedI <buffer> silent write
-"colorscheme desertEx
+colorscheme desertEx
 " --------use with vimdiff--------
 if &diff
   colorscheme medic_chalk

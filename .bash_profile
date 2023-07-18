@@ -12,13 +12,13 @@ fi
 
 
 # change bash prompt
-export PS1="\w>> "
-export PS1="\[\033[33;1m\]\w\[\033[m\]\$ "
+# export PS1="\w>> "
+# export PS1="\[\033[33;1m\]\w\[\033[m\]\$ "
 # add git branch info
 export PS1='\[\033[33;1m\]\w\[\033[0;32m\]$(if git rev-parse --git-dir > /dev/null 2>&1; then echo " - ["; fi)$(git branch 2>/dev/null | grep "^*" | colrm 1 2)\[\033[0;32m\]$(if git rev-parse --git-dir > /dev/null 2>&1; then echo "]"; fi)\[\033[0m\033[0;32m\] \$\[\033[0m\033[0;32m\]\[\033[0m\] '
 
-export CLICOLOR=1
-export LSCOLORS=ExFxBxDxCxegedabagacad
+# export CLICOLOR=1
+# export LSCOLORS=ExFxBxDxCxegedabagacad
 
 # add alias
 alias in='rg . | fzf --print0'  # use -e for exact match; use -u for unrestricted match (i.e., skip .ignore files)
