@@ -1,11 +1,5 @@
-# set vim to use on the command line
-set -o vi
-
- # change bash prompt
-export PS1="\w>> "
-export PS1="\[\033[33;1m\]\w\[\033[m\]\$ "
- # add git branch info
-export PS1='\[\033[33;1m\]\w\[\033[0;32m\]$(if git rev-parse --git-dir > /dev/null 2>&1; then echo " - ["; fi)$(git branch 2>/dev/null | grep "^*" | colrm 1 2)\[\033[0;32m\]$(if git rev-parse --git-dir > /dev/null 2>&1; then echo "]"; fi)\[\033[0m\033[0;32m\] \$\[\033[0m\033[0;32m\]\[\033[0m\] '
+# common shell script for use
+#
 
 alias l='ls -ltrGFho'
 alias pullmaster='git pull origin master'
@@ -39,11 +33,12 @@ mpirun -n $1 ats --xml_file=$2 2>&1 | tee ./run-$1-$( date '+%F_%H:%M:%S' ).log
 }
 
 run_pf1(){
-$PFLOTRAN_EXE -pflotranin $1 2>&1 | tee ./run-$( date '+%F_%H:%M:%S' ).log
+pflotran -pflotranin $1 2>&1 | tee ./run-$( date '+%F_%H:%M:%S' ).log
 }
 
 run_pf(){
-mpirun -np $1 pflotran -pflotranin $2  >& 8.stdout}
+mpirun -np $1 pflotran -pflotranin $2 2>&1 | tee ./run-$1-$( date '+%F_%H:%M:%S' ).log 
+}
 
 cfind(){
   find ./ -iname $1 2>/dev/null
@@ -66,4 +61,3 @@ echo "--Done!"
 c() {
 cd $1 && ls -ltrGFho
 }
-

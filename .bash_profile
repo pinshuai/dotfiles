@@ -21,6 +21,8 @@ export PS1='\[\033[33;1m\]\w\[\033[0;32m\]$(if git rev-parse --git-dir > /dev/nu
 # export LSCOLORS=ExFxBxDxCxegedabagacad
 
 # add alias
+alias dokilA='docker kill $(docker ps -a -q)'
+alias dokil1='docker kill $(docker ps -a -q | head -n 1)'
 alias in='rg . | fzf --print0'  # use -e for exact match; use -u for unrestricted match (i.e., skip .ignore files)
 alias F='rg . --files --hidden --unrestricted | fzf --print0'
 alias cf='cdd $(fd -t d . $HOME | fzf)'
@@ -90,7 +92,8 @@ $PFLOTRAN_EXE -pflotranin $1 2>&1 | tee ./run-$( date '+%F_%H:%M:%S' ).log
 }
 
 runpf(){
-  /Users/shua784/Dropbox/github/petsc_v3.13/arch-darwin-c-release/bin/mpirun -np $1 pflotran_v3.0-beta -pflotranin $2  >& 8.stdout}
+  mpirun -np $1 pflotran-pflotranin $2 2>&1 | tee ./run-$( date '+%F_%H:%M:%S' ).log
+}
 
 cfind(){
   find ./ -iname $1 2>/dev/null
@@ -124,25 +127,22 @@ cd $1 && ls -ltrGFho
 }
 
 syncprj() {
-rsync -avh -e ssh pshuai@cori.nersc.gov:/global/project/projectdirs/m1800/pin/"$1" $2
+rsync -avh -e ssh pshuai@perlmutter-p1.nersc.gov:/global/cfs/cdirs/m1800/pin/"$1" $2
 }
 
 # scp file between servers
 proj2pc() {
- \scp -rp pshuai@cori.nersc.gov:/global/project/projectdirs/m1800/pin/"$1" $2
+ \scp -rp pshuai@perlmutter-p1.nersc.gov:/global/cfs/cdirs/m1800/pin/"$1" $2
 }
 
 pc2proj() {
-  \scp -rp $1 pshuai@cori.nersc.gov:/global/project/projectdirs/m1800/pin/"$2"
+  \scp -rp $1 pshuai@perlmutter-p1.nersc.gov:/global/cfs/cdirs/m1800/pin/"$2"
 }
 
 pc2proj-m3421() {
-  \scp -rp $1 pshuai@cori.nersc.gov:/global/project/projectdirs/m3421/pin/"$2"
+  \scp -rp $1 pshuai@perlmutter-p1.nersc.gov:/global/project/projectdirs/m3421/pin/"$2"
 }
 
-cori2pc() {
-  \scp -rp pshuai@cori.nersc.gov:/global/cscratch1/sd/pshuai/"$1" $2
-}
 
 pc2pm() {
   \scp -rp $1 pshuai@perlmutter-p1.nersc.gov:/pscratch/sd/p/pshuai/"$2"
@@ -152,9 +152,6 @@ pm2pc() {
   \scp -rp pshuai@perlmutter-p1.nersc.gov:/pscratch/sd/p/pshuai/"$1" $2
 }
 
-pc2cori() {
- scp -rp $1 pshuai@cori.nersc.gov:/global/cscratch1/sd/pshuai/"$2"
-}
 
 pc2chpc_nfs() {
  scp -rp $1 u6046326@notchpeak1.chpc.utah.edu:/scratch/general/nfs1/pshuai/"$2"
@@ -172,13 +169,6 @@ chpc_home2pc() {
  scp -rp u6046326@notchpeak1.chpc.utah.edu:/uufs/chpc.utah.edu/common/home/u6046326/"$1" $2
 }
 
-pl2pc() {
- \scp -rp shua784@pinklady.pnl.gov:"$1" $2
-}
-
-pc2pl() {
-  \scp -rp $1 shua784@pinklady.pnl.gov:"$2"
-}
 
 # add shortcut
 export NB=$HOME/github
@@ -200,16 +190,19 @@ export WADE_API_KEY=
 export APPEEARS_USERNAME=
 export APPEEARS_PASSWORD=
 
+export PATH="/usr/local/texlive/2023/bin/universal-darwin:$PATH"
+
 #=========add pflotran short course related vars=================
 export PATH="/opt/homebrew/bin:$PATH"  
 export PETSC_DIR==$NB/petsc
 export PETSC_ARCH=arch-darwin-c-opt  
 export PFLOTRAN_DIR=$NB/pflotran
 export dfnworks_DIR=$NB/dfnWorks 
+export dfnworks_PATH=$NB/dfnWorks 
 export PFLOTRAN_EXE=$PFLOTRAN_DIR/src/pflotran/pflotran 
 export LAGRIT_EXE=$NB/LaGriT/build/lagrit 
 export DFNGEN_EXE=$dfnworks_DIR/DFNGen/DFNGen 
-export PATH="$NB/Dakota/software/dakota/bin:$PATH"
+export PATH="$NB/dakota/bin:$PATH"
 
 
 # >>> conda initialize >>>
