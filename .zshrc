@@ -30,11 +30,11 @@ echo "--Done!"
 }
 
 #PATHs
-export PATH=$PATH:/global/project/projectdirs/m1800/pin/pflotran/pflotran-030821/src/pflotran/bin
+# export PATH=$PATH:/global/project/projectdirs/m1800/pin/pflotran/pflotran-030821/src/pflotran/bin
 
-export PATH=/global/project/projectdirs/m1800/pin/ats-012121/amanzi-install-master-Release/bin:$PATH
-export PATH=/global/project/projectdirs/m1800/pin/ats-022221/amanzi-install-master-Release/bin:$PATH
-export PATH=/global/project/projectdirs/m1800/pin/ats-land_cover/amanzi-install-master-Release/bin:$PATH
+# export PATH=/global/project/projectdirs/m1800/pin/ats-012121/amanzi-install-master-Release/bin:$PATH
+# export PATH=/global/project/projectdirs/m1800/pin/ats-022221/amanzi-install-master-Release/bin:$PATH
+# export PATH=/global/project/projectdirs/m1800/pin/ats-land_cover/amanzi-install-master-Release/bin:$PATH
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,

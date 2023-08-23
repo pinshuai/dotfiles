@@ -16,7 +16,7 @@ Plug 'Valloric/MatchTagAlways'
 Plug 'sukima/xmledit'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-repeat'
-Plug 'davidhalter/jedi-vim'
+" Plug 'davidhalter/jedi-vim'
 Plug 'wincent/terminus'
 " Plug 'vim-airline/vim-airline-themes'
 " Plug 'vim-airline/vim-airline' 
@@ -39,33 +39,23 @@ let g:EasyMotion_do_mapping = 0 " Disable default mappings
 
 " Jump to anywhere you want with minimal keystrokes, with just one key binding.
 " `s{char}{label}`
-" nmap s <Plug>(easymotion-overwin-f)
+nmap s <Plug>(easymotion-overwin-f)
 " or
 " `s{char}{char}{label}`
 " Need one more keystroke, but on average, it may be more comfortable.
-nmap s <Plug>(easymotion-overwin-f2)
+nmap ss <Plug>(easymotion-overwin-f2)
 
 " Turn on case-insensitive feature
 let g:EasyMotion_smartcase = 1
 
-" JK motions: Line motions
-map <Leader>j <Plug>(easymotion-j)
-map <Leader>k <Plug>(easymotion-k)
-map <Leader>w <Plug>(easymotion-w)
-map <Leader>W <Plug>(easymotion-W)
-map <Leader>b <Plug>(easymotion-b)
-map <Leader>B <Plug>(easymotion-B)
-map <Leader>e <Plug>(easymotion-e)
-map <Leader>E <Plug>(easymotion-E)
-map <Leader>n <Plug>(easymotion-n)
-map <Leader>N <Plug>(easymotion-N)
 " -------- other settings---------
 filetype plugin indent on       " load file type plugins + indentation
-set showcmd
+
 syntax on
 colorscheme desertEx
 
 " set number " show line number
+set showcmd "show partial cmd in the last line of the screen"
 set hlsearch  "highlight search results"
 set splitbelow "split window below
 set splitright " split window to the right
@@ -75,7 +65,8 @@ set smartcase                   " ... unless they contain at least one capital l
 set tabstop=2 shiftwidth=2      " a tab is two spaces (or set this to 4)
 set expandtab                   " use spaces, not tabs (optional)
 set backspace=indent,eol,start  " backspace through everything in insert mode"
-
+" Set the commands to save in history default number is 20.
+set history=1000
 " " setting for py files
 " au BufNewFile,BufRead *.py
 "     \ set encoding=utf-8
@@ -164,7 +155,7 @@ noremap <leader>pf :%!xmllint --format -<cr>
 nnoremap <silent> <leader>f :FZF<cr>
 nnoremap <silent> <leader>F :FZF ~<cr>
 " toggle line number
-noremap <leader>n :set number!<cr>
+noremap <leader>l :set number!<cr>
 " copy to register y
 vmap <C-c> "yy
 " paste from register y
@@ -172,7 +163,7 @@ nnoremap <leader>v "yp
 " quickly switch buffers
 nnoremap <Leader>b :ls<CR>:b<Space>
 " toggle undotree; show changes in history
-nnoremap <C-u> :UndotreeToggle<CR>
+nnoremap <Leader>u :UndotreeToggle<CR>
 " toggle NERDTree
 nnoremap <C-t> :NERDTreeToggle<CR>
 " open terminal in verical window
@@ -203,24 +194,46 @@ nnoremap <leader>Rsc yi":%s#<C-r>"##gc<left><left><left>
 
 " fold based on skip-noskip
 noremap ski :setlocal foldmethod=expr foldexpr=FoldOnKeyword()<CR>
+
+noremap L $
+noremap H ^
+" remove search highlight
+nmap <F9> :nohl
+
+" Center the cursor vertically when moving to the next word during a search.
+nnoremap n nzz
+nnoremap N Nzz
 " quickly move cursor
 " noremap jj 12j
 " noremap kk 12k
 " noremap hh 12h
 " noremap ll 12l
-"----------- jedi-autocompletion ------
-let g:jedi#popup_on_dot = 0
-let g:jedi#completions_command = "<C-n>"
-let g:jedi#auto_vim_configuration = 0
-let g:jedi#use_tabs_not_buffers = 1
-let g:jedi#use_splits_not_buffers = "right"
-let g:jedi#goto_command = "<leader>g"
-let g:jedi#goto_assignments_command = ""
-let g:jedi#goto_stubs_command = ""
-let g:jedi#goto_definitions_command = "<leader>d"
-let g:jedi#documentation_command = ""
-let g:jedi#usages_command = "<leader>u"
-let g:jedi#rename_command = "<leader>r"
+""----------- jedi-autocompletion ------
+"let g:jedi#popup_on_dot = 0
+"let g:jedi#completions_command = "<C-n>"
+"let g:jedi#auto_vim_configuration = 0
+"let g:jedi#use_tabs_not_buffers = 1
+"let g:jedi#use_splits_not_buffers = "right"
+"let g:jedi#goto_command = "<leader>g"
+"let g:jedi#goto_assignments_command = ""
+"let g:jedi#goto_stubs_command = ""
+"let g:jedi#goto_definitions_command = "<leader>d"
+"let g:jedi#documentation_command = ""
+"let g:jedi#usages_command = "<leader>u"
+"let g:jedi#rename_command = "<leader>r"
+
+"---------- easy motion mapping-----------
+" JK motions: Line motions
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
+map <Leader>w <Plug>(easymotion-w)
+map <Leader>W <Plug>(easymotion-W)
+map <Leader>b <Plug>(easymotion-b)
+map <Leader>B <Plug>(easymotion-B)
+map <Leader>e <Plug>(easymotion-e)
+map <Leader>E <Plug>(easymotion-E)
+map <Leader>n <Plug>(easymotion-n)
+map <Leader>N <Plug>(easymotion-N)
 
 " define a general fold method
 set foldmethod=indent   " fold based on indent
