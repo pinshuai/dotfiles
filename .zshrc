@@ -3,7 +3,11 @@ source ~/.bash_profile
 
 # add auto complete for zsh
 source ~/github/zsh-autocomplete/zsh-autocomplete.plugin.zsh
-#
+# all Tab widgets
+zstyle ':autocomplete:*complete*:*' insert-unambiguous yes
+bindkey '\t' menu-select "$terminfo[kcbt]" menu-select
+bindkey -M menuselect '\t' menu-complete "$terminfo[kcbt]" reverse-menu-complete
+
 
 # Load rbenv automatically by appending
 # the following to ~/.zshrc:

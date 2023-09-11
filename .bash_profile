@@ -21,6 +21,7 @@ export PS1='\[\033[33;1m\]\w\[\033[0;32m\]$(if git rev-parse --git-dir > /dev/nu
 # export LSCOLORS=ExFxBxDxCxegedabagacad
 
 # add alias
+alias cn='c $NB'
 alias dokilA='docker kill $(docker ps -a -q)'
 alias dokil1='docker kill $(docker ps -a -q | head -n 1)'
 alias in='rg . | fzf --print0'  # use -e for exact match; use -u for unrestricted match (i.e., skip .ignore files)
@@ -92,7 +93,7 @@ $PFLOTRAN_EXE -pflotranin $1 2>&1 | tee ./run-$( date '+%F_%H:%M:%S' ).log
 }
 
 runpf(){
-  mpirun -np $1 pflotran-pflotranin $2 2>&1 | tee ./run-$( date '+%F_%H:%M:%S' ).log
+  mpirun -np $1 pflotran -pflotranin $2 2>&1 | tee ./run-$( date '+%F_%H:%M:%S' ).log
 }
 
 cfind(){
@@ -182,6 +183,7 @@ export WATERSHED_WORKFLOW_DIR=$HOME/github/watershed-workflow
 export PYTHONPATH="${PYTHONPATH}:$ATS_SRC_DIR/tools/utils"
 
 # add python path for watershed_workfow
+export PYTHONPATH="${PYTHONPATH}:$SEACAS_DIR/lib"
 # ========== API keys (do not share) ===============
 # WaDE
 export WADE_API_KEY=
@@ -194,15 +196,18 @@ export PATH="/usr/local/texlive/2023/bin/universal-darwin:$PATH"
 
 #=========add pflotran short course related vars=================
 export PATH="/opt/homebrew/bin:$PATH"  
-export PETSC_DIR==$NB/petsc
+export PETSC_DIR=$NB/petsc
+export SEACAS_DIR=$NB/seacas
 export PETSC_ARCH=arch-darwin-c-opt  
 export PFLOTRAN_DIR=$NB/pflotran
+export DAKOTA_DIR=$NB/dakota
 export dfnworks_DIR=$NB/dfnWorks 
 export dfnworks_PATH=$NB/dfnWorks 
 export PFLOTRAN_EXE=$PFLOTRAN_DIR/src/pflotran/pflotran 
 export LAGRIT_EXE=$NB/LaGriT/build/lagrit 
 export DFNGEN_EXE=$dfnworks_DIR/DFNGen/DFNGen 
-export PATH="$NB/dakota/bin:$PATH"
+export PATH="$DAKOTA_DIR/bin:$PATH"
+export PATH="$PFLOTRAN_DIR/src/pflotran/bin:$PATH"
 
 
 # >>> conda initialize >>>
