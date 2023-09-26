@@ -117,7 +117,11 @@ noremap <leader>h :History<CR>
 " show registers
 noremap <leader>r :reg<CR>
 " copy to clipboard
-vmap <C-c> "yy
+" vmap <C-c> "yy
+" ctrl-x for cut
+vmap <C-x> :!pbcopy<cr>
+" ctrl-c for copy
+vmap <C-c> :w !pbcopy<cr><cr>
 " paste from clipboard
 noremap <leader>v "*p
 " quickly add a blankline below
