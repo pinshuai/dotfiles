@@ -1,6 +1,16 @@
 # common shell script for use
 #
+# set vim to use on the command line
+set -o vi
 
+# set FZF options
+export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
+#
+# alias
+alias cdn='c $NB'
+alias ss='source ~/.profile'
+alias cf='cdd $(fzf)'
+alias f='fzf'
 alias l='ls -ltrGFho'
 alias pullmaster='git pull origin master'
 alias pushmaster='git push origin master'
