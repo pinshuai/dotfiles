@@ -22,7 +22,7 @@ export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
 # export PS1="\w>> "
 # export PS1="\[\033[33;1m\]\w\[\033[m\]\$ "
 # add git branch info
-export PS1='\[\033[33;1m\]\w\[\033[0;32m\]$(if git rev-parse --git-dir > /dev/null 2>&1; then echo " - ["; fi)$(git branch 2>/dev/null | grep "^*" | colrm 1 2)\[\033[0;32m\]$(if git rev-parse --git-dir > /dev/null 2>&1; then echo "]"; fi)\[\033[0m\033[0;32m\] \$\[\033[0m\033[0;32m\]\[\033[0m\]\n>'
+export PS1='\[\033[33;1m\]\w\[\033[0;32m\]$(if git rev-parse --git-dir > /dev/null 2>&1; then echo " - ["; fi)$(git branch 2>/dev/null | grep "^*" | colrm 1 2)\[\033[0;32m\]$(if git rev-parse --git-dir > /dev/null 2>&1; then echo "]"; fi)\[\033[0m\033[0;32m\] \$\[\033[0m\033[0;32m\]\[\033[0m\]\n> '
 
 export CLICOLOR=1
 export LSCOLORS=ExFxBxDxCxegedabagacad
@@ -66,14 +66,23 @@ alias gupa='git pull --rebase --autostash'
 alias ga='git add'
 alias gaa='git add --all'
 alias gmtlvim='git mergetool --no-prompt --tool=vimdiff'
+alias cds='c $SCRATCH_NFS'
+alias cdn='c $NB'
 # bash function
 
 # add alias
+export NB=/uufs/chpc.utah.edu/common/home/u6046326/github
 export SIF_ATS_MASTER=/uufs/chpc.utah.edu/common/home/u6046326/CHPC/Container/ats_master-latest.sif 
 export SIF_ATS_1d3=/uufs/chpc.utah.edu/common/home/u6046326/CHPC/Container/ats-1.3-latest.sif 
+export SIF_ATS_1d5=/uufs/chpc.utah.edu/common/home/u6046326/CHPC/Container/ats_v1.5_dev28cbfab.sif
 # export SCRATCH_LUS=/scratch/general/lustre/u6046326
 export SCRATCH_NFS=/scratch/general/nfs1/pshuai
 export SCRATCH_VAS=/scratch/general/vast/pshuai
+
+# use youplot to show timestep of ats runs
+plot_timestep() {
+	cat $1 | grep "Cycle" | awk '{print $9, $13}' | awk '{printf "%s %.2f\n", $1, log($2)/log(10)}' | uplot line -d ' ' -w 100 -h 10 --ylabel 'timestep (log10)' --xlabel 'days' -t 'Run timestep'
+}
 
 # # list the files to be staged in the order of file size
 gstS() {
@@ -82,6 +91,7 @@ gstS() {
 
 # docker_prune() {
 #     # prune docker containers and images
+# docker container prune
 # docker container prune
 # docker rmi $(docker images --filter "dangling=true" -q --no-trunc)
 # }
@@ -104,12 +114,19 @@ gitbr() {
 }
 
 singularity_ats_master(){
+ml singularity gcc/8.5.0 mpich/3.4.2
 mpirun -np $1 singularity exec $SIF_ATS_MASTER ats --xml_file=$2 2>&1 | tee ./run-$1-$( date '+%F_%H:%M:%S' ).log
 }
+
 singularity_ats_1d3(){
+ml singularity gcc/8.5.0 mpich/3.4.2
 mpirun -np $1 singularity exec $SIF_ATS_1d3 ats --xml_file=$2 2>&1 | tee ./run-$1-$( date '+%F_%H:%M:%S' ).log
 }
 
+singularity_ats_1d5(){
+ml singularity gcc/8.5.0 mpich/3.4.2
+mpirun -np $1 singularity exec $SIF_ATS_1d5 ats --xml_file=$2 2>&1 | tee ./run-$1-$( date '+%F_%H:%M:%S' ).log
+}
 # run_mesh() {
 # # run meshconvert
 # # $1-- no of cores; $2-- in .exo mesh; $3 -- out .par mesh
@@ -201,7 +218,6 @@ if [[ "$UUFSCELL" = "kingspeak.peaks" ]] ; then
      :
 
 # ----------------------------------------------------------------------
-# Do Notchpeak specific initializations
 elif [[ "$UUFSCELL" = "notchpeak.peaks" ]] ; then
 # add custom module loads after this
      :
@@ -251,6 +267,14 @@ fi
 #export TMPDIR=/scratch/local/$USER 
 
 
+# ------ begin code written by ats_manager/setup_ats_manager.sh ------
+export ATS_BASE=/uufs/chpc.utah.edu/common/home/u6046326/github/ats-amanzi-Jul2023
+export MPI_DIR=/uufs/chpc.utah.edu/sys/spack/v019/linux-rocky8-x86_64/gcc-11.2.0/openmpi-4.1.4-fvjpa3zslc4266fazcxbv6ntjgojf6rx
+# export PYTHONPATH="${PYTHONPATH}:/uufs/chpc.utah.edu/common/home/u6046326/github/ats-amanzi-Jul2023/ats_manager"
+module use -a /uufs/chpc.utah.edu/common/home/u6046326/github/ats-amanzi-Jul2023/modulefiles
+# ------ end code written by ats_manager/setup_ats_manager.sh --------
+
+export PATH="/uufs/chpc.utah.edu/common/home/u6046326/software/pkg/mambaforge/bin:$PATH"
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/uufs/chpc.utah.edu/sys/installdir/miniconda3/4.3.31/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
