@@ -216,6 +216,9 @@ map <Leader>e <Plug>(easymotion-e)
 map <Leader>E <Plug>(easymotion-E)
 map <Leader>n <Plug>(easymotion-n)
 map <Leader>N <Plug>(easymotion-N)
+" jump to diff in vimdiff
+nmap [ [c
+nmap ] ]c
 " -----  other options----------
 syntax on
 let python_highlight_all=1

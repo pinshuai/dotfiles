@@ -21,7 +21,8 @@ export PS1='\[\033[33;1m\]\w\[\033[0;32m\]$(if git rev-parse --git-dir > /dev/nu
 # export LSCOLORS=ExFxBxDxCxegedabagacad
 
 # add alias
-alias cn='c $NB'
+alias ci='c $ICLOUD'
+alias cdn='c $NB'
 alias dokilA='docker kill $(docker ps -a -q)'
 alias dokil1='docker kill $(docker ps -a -q | head -n 1)'
 alias in='rg . | fzf --print0'  # use -e for exact match; use -u for unrestricted match (i.e., skip .ignore files)
@@ -173,6 +174,7 @@ chpc_home2pc() {
 
 # add shortcut
 export NB=$HOME/github
+export ICLOUD=$HOME/Library/Mobile\ Documents/iCloud~md~obsidian/Documents/notes
 export ATS_SRC_DIR=$NB/ats
 export AMANZI_SRC_DIR=$NB/amanzi
 
