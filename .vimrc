@@ -195,6 +195,8 @@ nnoremap <leader>Ry yi":%s#<C-r>"#<C-r>y#g<CR>
 nnoremap <leader>Ryc yi":%s#<C-r>"#<C-r>y#gc<CR>
 nnoremap <leader>Rs yi":%s#<C-r>"##g<left><left>
 nnoremap <leader>Rsc yi":%s#<C-r>"##gc<left><left><left>
+" replace all highlighted texts
+nnoremap <Leader>Rh :%s///g<left><left>
 " quickly move to the begining and end of line; this will override the cursor
 " motion for top/bottom
 nmap H ^
@@ -219,6 +221,8 @@ map <Leader>N <Plug>(easymotion-N)
 " jump to diff in vimdiff
 nmap [ [c
 nmap ] ]c
+" place current line to top of screen
+nnoremap T zt
 " -----  other options----------
 syntax on
 let python_highlight_all=1
