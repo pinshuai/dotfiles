@@ -1,19 +1,38 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
-source /global/homes/p/pshuai/.bashrc
-# Path to your oh-my-zsh installation.
-export ZSH="/global/homes/p/pshuai/.oh-my-zsh"
+#source ~/github/zsh-snap/znap.zsh
+source ~/.bash_profile
+
+# add auto complete for zsh
+source ~/github/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+# all Tab widgets
+zstyle ':autocomplete:*complete*:*' insert-unambiguous yes
+bindkey '\t' menu-select "$terminfo[kcbt]" menu-select
+bindkey -M menuselect '\t' menu-complete "$terminfo[kcbt]" reverse-menu-complete
+
+
+# Load rbenv automatically by appending
+# the following to ~/.zshrc:
+
+eval "$(rbenv init - zsh)"
+#
+#
+# get bash behavior of wildcard 
+# setopt nonomatch
+# prevent zsh to throw a no-match error
+# alias scp='noglob scp'
+unsetopt nomatch
+
 
 # bind keys
 bindkey "[C" forward-word
 bindkey "[D" backward-word
 
 # store dirs history
-setopt AUTO_PUSHD                  # pushes the old directory onto the stack
-setopt PUSHD_MINUS                 # exchange the meanings of '+' and '-'
-setopt CDABLE_VARS                 # expand the expression (allows 'cd -2/tmp')
-autoload -U compinit && compinit   # load + start completion
-zstyle ':completion:*:directory-stack' list-colors '=(#b) #([0-9]#)*( *)==95=38;5;12'
+
+#setopt AUTO_PUSHD                  # pushes the old directory onto the stack
+#setopt PUSHD_MINUS                 # exchange the meanings of '+' and '-'
+#setopt CDABLE_VARS                 # expand the expression (allows 'cd -2/tmp')
+#autoload -U compinit && compinit   # load + start completion
+#zstyle ':completion:*:directory-stack' list-colors '=(#b) #([0-9]#)*( *)==95=38;5;12'
 
 
 gitpullpush() {
@@ -32,9 +51,13 @@ echo "--Done!"
 #PATHs
 # export PATH=$PATH:/global/project/projectdirs/m1800/pin/pflotran/pflotran-030821/src/pflotran/bin
 
-# export PATH=/global/project/projectdirs/m1800/pin/ats-012121/amanzi-install-master-Release/bin:$PATH
-# export PATH=/global/project/projectdirs/m1800/pin/ats-022221/amanzi-install-master-Release/bin:$PATH
-# export PATH=/global/project/projectdirs/m1800/pin/ats-land_cover/amanzi-install-master-Release/bin:$PATH
+
+# If you come from bash you might have to change your $PATH.
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
+
+# Path to your oh-my-zsh installation.
+export ZSH="/Users/shuai/.oh-my-zsh"
+
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -131,25 +154,77 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+
+alias bfg='java -jar /global/project/projectdirs/m1800/pin/bfg/bfg-1.14.0.jar'
+
+alias v='vim'
+
+
+alias l='ls -ltrGFho'
 alias scp='\scp'
 alias ss='source ~/.zshrc'
-alias bfg='java -jar /global/project/projectdirs/m1800/pin/bfg/bfg-1.14.0.jar'
-alias l='ls -ltrGFho'
-alias v='vim'
+# cdd() {
+#cd $1
+#ls -ltr
+#}
+#
+#syncprj() {
+#rsync -avh -e ssh pshuai@cori.nersc.gov:/global/project/projectdirs/m1800/pin/"$1" $2
+#}
+#
+## scp file between servers
+## add \ before scp for zsh env.
+#proj2pc() {
+# \scp -rp pshuai@cori.nersc.gov:/global/project/projectdirs/m1800/pin/"$1" $2
+#}
+#
+#pc2proj() {
+#  \scp -rp $1 pshuai@cori.nersc.gov:/global/project/projectdirs/m1800/pin/"$2"
+#}
+#
+#cori2pc() {
+#  \scp -rp pshuai@cori.nersc.gov:/global/cscratch1/sd/pshuai/"$1" $2
+#}
+#
+#pc2cori() {
+#  \scp -rp $1 pshuai@cori.nersc.gov:/global/cscratch1/sd/pshuai/"$2"
+#}
+
+#### add shortcuts###
+#export HFR=/Users/shua784/Dropbox/PNNL/Projects/Reach_scale_model
+#export TH=/Users/shua784/Dropbox/PNNL/Projects/HFR-thermal
+#export NB=/Users/shua784/Dropbox/github
+#export AT=/Users/shua784/Dropbox/PNNL/Projects/AT-model
+
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+# for zoxide
+eval "$(zoxide init zsh)"
+
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/usr/common/software/python/3.8-anaconda-2020.11/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$('/Users/shuai/mambaforge/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/usr/common/software/python/3.8-anaconda-2020.11/etc/profile.d/conda.sh" ]; then
-        . "/usr/common/software/python/3.8-anaconda-2020.11/etc/profile.d/conda.sh"
+    if [ -f "/Users/shuai/mambaforge/etc/profile.d/conda.sh" ]; then
+        . "/Users/shuai/mambaforge/etc/profile.d/conda.sh"
     else
-        export PATH="/usr/common/software/python/3.8-anaconda-2020.11/bin:$PATH"
+        export PATH="/Users/shuai/mambaforge/bin:$PATH"
+
     fi
 fi
 unset __conda_setup
+
+if [ -f "/Users/shuai/mambaforge/etc/profile.d/mamba.sh" ]; then
+    . "/Users/shuai/mambaforge/etc/profile.d/mamba.sh"
+fi
 # <<< conda initialize <<<
 
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
+source /opt/homebrew/opt/chruby/share/chruby/auto.sh
+chruby ruby-3.1.3

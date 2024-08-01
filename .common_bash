@@ -1,0 +1,73 @@
+# common shell script for use
+#
+# set vim to use on the command line
+set -o vi
+
+# set FZF options
+export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
+#
+# alias
+alias cdn='c $NB'
+alias ss='source ~/.profile'
+alias cf='cdd $(fzf)'
+alias f='fzf'
+alias l='ls -ltrGFho'
+alias pullmaster='git pull origin master'
+alias pushmaster='git push origin master'
+alias glf='git log --follow -p --'
+
+# bash function
+
+# list the files to be staged in the order of file size
+gstS() {
+    git status --porcelain | awk '{print $2}' | xargs ls -halFS
+}
+
+docker_prune() {
+    # prune docker containers and images
+docker container prune
+docker rmi $(docker images --filter "dangling=true" -q --no-trunc)
+}
+
+cgrep(){
+# search for keywords in files
+grep -ir --color "$1" ./*
+}
+
+gitbr() {
+  git for-each-ref --sort=committerdate refs/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'
+}
+
+run_ats(){
+mpirun -n $1 ats --xml_file=$2 2>&1 | tee ./run-$1-$( date '+%F_%H:%M:%S' ).log
+}
+
+run_pf1(){
+pflotran -pflotranin $1 2>&1 | tee ./run-$( date '+%F_%H:%M:%S' ).log
+}
+
+run_pf(){
+mpirun -np $1 pflotran -pflotranin $2 2>&1 | tee ./run-$1-$( date '+%F_%H:%M:%S' ).log 
+}
+
+cfind(){
+  find ./ -iname $1 2>/dev/null
+}
+
+gitpullpush() {
+# echo "commit message:"
+read -ep "Enter commit message: " message
+echo "--pull changes from github"
+git pull origin master
+git add --all
+git commit -m "$message"
+# echo "--$message"
+echo "--push changes to github"
+git push origin master
+echo "--Done!"
+}
+
+
+c() {
+cd $1 && ls -ltrGFho
+}
