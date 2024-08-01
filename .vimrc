@@ -57,6 +57,7 @@ Plug 'google/vim-searchindex'
 Plug 'mileszs/ack.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'github/copilot.vim'
 " Initialize plugin system
 call plug#end()
 " --------Easy Motion config-------

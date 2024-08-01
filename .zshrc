@@ -1,6 +1,11 @@
 #source ~/github/zsh-snap/znap.zsh
 source ~/.bash_profile
 
+
+# add pass env variables
+export PASSWORD_STORE_DIR="/Users/shuai/.password-store"
+
+
 # add auto complete for zsh
 source ~/github/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 # all Tab widgets

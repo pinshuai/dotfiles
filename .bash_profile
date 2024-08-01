@@ -11,16 +11,19 @@ if type rg &> /dev/null; then
 fi
 
 
-# change bash prompt
+
+
 # export PS1="\w>> "
 # export PS1="\[\033[33;1m\]\w\[\033[m\]\$ "
 # add git branch info
-export PS1='\[\033[33;1m\]\w\[\033[0;32m\]$(if git rev-parse --git-dir > /dev/null 2>&1; then echo " - ["; fi)$(git branch 2>/dev/null | grep "^*" | colrm 1 2)\[\033[0;32m\]$(if git rev-parse --git-dir > /dev/null 2>&1; then echo "]"; fi)\[\033[0m\033[0;32m\] \$\[\033[0m\033[0;32m\]\[\033[0m\] '
+# export PS1='\[\033[33;1m\]\w\[\033[0;32m\]$(if git rev-parse --git-dir > /dev/null 2>&1; then echo " - ["; fi)$(git branch 2>/dev/null | grep "^*" | colrm 1 2)\[\033[0;32m\]$(if git rev-parse --git-dir > /dev/null 2>&1; then echo "]"; fi)\[\033[0m\033[0;32m\] \$\[\033[0m\033[0;32m\]\[\033[0m\] '
 
 # export CLICOLOR=1
 # export LSCOLORS=ExFxBxDxCxegedabagacad
 
 # add alias
+alias mkdir='mkdir -p'
+alias cp='cp -rp'
 alias ci='c $ICLOUD'
 alias cdn='c $NB'
 alias dokilA='docker kill $(docker ps -a -q)'
@@ -163,6 +166,14 @@ chpc_nfs2pc() {
  scp -rp u6046326@notchpeak1.chpc.utah.edu:/scratch/general/nfs1/pshuai/"$1" $2
 }
 
+chpc_group2pc() {
+ scp -rp u6046326@notchpeak1.chpc.utah.edu:/uufs/chpc.utah.edu/common/home/shuai-group1/"$1" $2
+}
+
+pc2chpc_group() {
+ scp -rp $1 u6046326@notchpeak1.chpc.utah.edu:/uufs/chpc.utah.edu/common/home/shuai-group1/"$2"
+}
+
 pc2chpc_home() {
  scp -rp $1 u6046326@notchpeak1.chpc.utah.edu:/uufs/chpc.utah.edu/common/home/u6046326/"$2"
 }
@@ -170,6 +181,17 @@ pc2chpc_home() {
 chpc_home2pc() {
  scp -rp u6046326@notchpeak1.chpc.utah.edu:/uufs/chpc.utah.edu/common/home/u6046326/"$1" $2
 }
+
+tacc_work2pc() {
+ scp -rp pshuai@login2.ls6.tacc.utexas.edu:/work/09628/pshuai/ls6/"$1" $2
+}
+
+pc2tacc_work() {
+ scp -rp $1 pshuai@login2.ls6.tacc.utexas.edu:/work/09628/pshuai/ls6/"$2"
+}
+
+
+
 
 
 # add shortcut
