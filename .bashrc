@@ -22,8 +22,8 @@ export TH=$CFS/m1800/pin/HFR-thermal
 export THORNE=$CFS/m1800/pin/HFR-thorne
 export PRW=$CFS/m1800/pin/PriestRapidsWatershed
 export AT=$CFS/m1800/pin/AT-model
-export PFLOTRAN_EXE=$CFS/pflotran/pflotran-cori-new/src/pflotran/pflotran
-export PFLOTRAN_KNL_EXE=$CFS/m1800/pin/pflotran-knl/src/pflotran/pflotran
+# export PFLOTRAN_EXE=$CFS/pflotran/pflotran-cori-new/src/pflotran/pflotran
+# export PFLOTRAN_KNL_EXE=$CFS/m1800/pin/pflotran-knl/src/pflotran/pflotran
 # export ATS_GEOCHEM_EXE=$CFS/m1800/pin/ats-geochem-111821/amanzi-install-master-Release/bin/ats
 # export ATS_EXE=$CFS/m1800/pin/ats-012121/amanzi-install-master-Release/bin/ats-012121-c39571b
 # export ATS_KNL_EXE=$CFS/m3421/ats-new/ats/install-master/cori-knl/intel-6.0.5-mpich-7.7.10/opt/bin/ats
@@ -35,12 +35,19 @@ export MYFUNC_DIR=$CFS/m1800/pin/github/myfunctions
 # export AMANZI_SRC_DIR=$CFS/m1800/pin/ats-geochem/repos/amanzi
 # export ATS_SRC_DIR=$CFS/m1800/pin/ats-geochem/repos/amanzi/src/physics/ats
 # export PATHS
-#export PATH=$PATH:$CFS/m1800/pin/pflotran/pflotran-030821/src/pflotran/bin
+# export PETSC_DIR=/global/cfs/cdirs/m1800/pin/pflotran-perl/petsc_v3.20.2
+# export PETSC_ARCH=arch-linux-c-opt
+export PATH=$PATH:$CFS/m1800/pin/pflotran-perl/petsc_v3.20.2/pflotran_v5.0/src/pflotran/bin
 #export PATH=$CFS/m1800/pin/ats-012121/amanzi-install-master-Release/bin:$PATH
 #export PATH=$CFS/m1800/pin/ats-022221/amanzi-install-master-Release/bin:$PATH
 #export PATH=$CFS/m1800/pin/ats-land_cover/amanzi-install-master-Release/bin:$PATH
 #export PATH=$CFS/m1800/pin/ats-geochem/amanzi-install-master-Release/bin:$PATH
-
+alias cp='cp -rp'
+alias ...='../..'
+alias ....='../../..'
+alias cds='c $SCRATCH'
+alias cdn='c $NB'
+alias cdg='c $M1800'
 alias csacct='sacct --format=JobID,partition,state,time,start,end,elapsed,nnodes,ncpus,nodelist,AllocTRES%32'  # show formatted job information
 alias in='rg . | fzf --print0'  # use -e for exact match
 alias cf='cdd $(fzf)'
@@ -107,19 +114,19 @@ csalloc() {
   salloc -N $1 -C cpu -q interactive -t $2 -L SCRATCH -A $3
 }
 
-csalloc_haswell() {
-  salloc -N $1 -C haswell -q interactive -t $2 -L SCRATCH -A m1800
-}
+# csalloc_haswell() {
+#   salloc -N $1 -C haswell -q interactive -t $2 -L SCRATCH -A m1800
+# }
 
 csalloc_perl() {
-  salloc -N $1 -C cpu -q interactive -t $2 -L SCRATCH -A m1800
+  salloc -N $1 -c 2 -C cpu -q interactive -t $2 -L SCRATCH -A m1800
 }
 
-csalloc_knl() {
-  salloc -N $1 -C knl -q interactive -t $2 -L SCRATCH -A m3940
-}
+# csalloc_knl() {
+#   salloc -N $1 -C knl -q interactive -t $2 -L SCRATCH -A m3940
+# }
 csrun_pf() {
-  srun -n $1 pflotran-030821 -pflotranin $2 2>&1 | tee ./run-$1-$( date '+%F_%H:%M:%S' ).log
+  srun -n $1 pflotran -pflotranin $2 2>&1 | tee ./run-$1-$( date '+%F_%H:%M:%S' ).log
 }
 
 csrun_pf_res() {
@@ -172,7 +179,10 @@ csrun_ideasATS() {
 # export ATS_BASE=/global/cfs/cdirs/m1800/pin/ats-perlmutter_v1.5
 # export PYTHONPATH=:/global/cfs/cdirs/m1800/pin/ats-perlmutter_v1.5/ats_manager
 # export MPI_DIR=/opt/cray/pe/mpich/8.1.25/ofi/gnu/9.1
-# module use -a /global/cfs/cdirs/m1800/pin/ats-perlmutter_v1.5/modulefiles
+module use -a /global/cfs/cdirs/m1800/zhi/ats-master-may16/modulefiles
+module use -a /global/cfs/cdirs/m1800/pin/modulefiles
+
+
 #if [[ -z $SHIFTER_RUNTIME ]]
 #then
 #

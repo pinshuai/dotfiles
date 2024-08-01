@@ -160,6 +160,8 @@ noremap <leader>l :set number!<cr>
 vmap <C-c> "yy
 " paste from register y
 nnoremap <leader>v "yp
+" replace current word with default register (*)
+noremap pw viwp
 " quickly switch buffers
 nnoremap <Leader>b :ls<CR>:b<Space>
 " toggle undotree; show changes in history
@@ -203,6 +205,10 @@ nmap <F9> :nohl
 " Center the cursor vertically when moving to the next word during a search.
 nnoremap n nzz
 nnoremap N Nzz
+
+" jump between diffs
+noremap [ [c
+noremap ] ]c
 " quickly move cursor
 " noremap jj 12j
 " noremap kk 12k
