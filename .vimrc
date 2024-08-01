@@ -6,6 +6,7 @@ filetype plugin on
 
 " Load an indent file for the detected file type.
 filetype indent on
+
 " -------vim-plug--------
 " install vim-plug if not already installed
 let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
@@ -21,13 +22,19 @@ if empty(glob('~/.vim/colors/desertEx.vim'))
 endif
 " install plugins
 call plug#begin('~/.vim/plugged')
+
 " Plug 'instant-markdown/vim-instant-markdown', {'for': 'markdown', 'do': 'yarn install'}
+
 " highlight yanked region
 Plug 'machakann/vim-highlightedyank'
 " motion plugin
 Plug 'easymotion/vim-easymotion'
 Plug 'justinmk/vim-sneak'
 Plug 'mbbill/undotree'
+
+" Plug 'sukima/xmledit'
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-repeat'
 Plug 'akinsho/bufferline.nvim'
@@ -35,19 +42,20 @@ Plug 'akinsho/bufferline.nvim'
 Plug 'andymass/vim-matchup'
 " Plug 'Valloric/MatchTagAlways'
 " Plug 'davidhalter/jedi-vim'
-Plug 'vim-airline/vim-airline'
-" Plug 'powerline/powerline'
-Plug 'nvie/vim-flake8'
-Plug 'tmhedberg/SimpylFold'
-Plug 'vim-syntastic/syntastic'
+Plug 'wincent/terminus'
+" Plug 'vim-airline/vim-airline-themes'
+" Plug 'vim-airline/vim-airline' 
 " Plug 'Valloric/YouCompleteMe'
-Plug 'airblade/vim-gitgutter'
+Plug 'vim-scripts/indentpython.vim'
+Plug 'tmhedberg/SimpylFold'
+Plug 'airblade/vim-gitgutter' 
 Plug 'jiangmiao/auto-pairs'
 Plug 'preservim/nerdtree'
 Plug 'ParamagicDev/vim-medic_chalk'
 Plug 'google/vim-searchindex'
+" Plug 'henrik/vim-indexed-search'
 Plug 'mileszs/ack.vim'
-" Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 " Initialize plugin system
 call plug#end()
@@ -64,7 +72,6 @@ nmap ss <Plug>(easymotion-overwin-f2)
 
 " Turn on case-insensitive feature
 let g:EasyMotion_smartcase = 1
-
 
 " ---------YOuCompleteMe----------
 "python with virtualenv support
@@ -97,19 +104,24 @@ set history=1000
 " set highlight forground and background colors
 hi Search cterm=NONE ctermfg=white ctermbg=darkblue
 " ------- enable Ag ---------------
+
 let g:ackprg = 'ag --nogroup --nocolor --column'
 
 " grep
 command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
 set grepprg=rg\ --vimgrep
-" --------vim-commentary------------------
-autocmd FileType xml setlocal commentstring=<!--%s-->
-autocmd FileType sh,python,text setlocal commentstring=#%s
-autocmd FileType vim setlocal commentstring=\"%s
 
+" ------------commentatory----------------
+autocmd FileType xml,html setlocal commentstring=<!--%s--> 
+autocmd FileType sh,python,text,in setlocal commentstring=#%s
+" ------------- python file type setting -----------
+autocmd FileType python setlocal tabstop=4 softtabstop=4 shiftwidth=4 
 
-" ----------key mapping------------
+"---------------KEY MAPPING---------------
 let g:mapleader=' '
+
+" show history
+noremap <leader>h :History<CR>
 " pretty format XML
 noremap <leader>pf :%!xmllint --format -<cr>
 " show history
@@ -130,11 +142,16 @@ noremap <CR> o<Esc>
 noremap <leader><cr> O<Esc>
 " exact search
 nnoremap <leader>\ /\<\><left><left>
-" comment line or block
+" comment line
 noremap <leader>/ :Commentary<cr>
+" group comment lines that contain current words
+nnoremap <leader>Cw yiw:%s/^.*<C-r>".*$/\# &/
+" toggle between edit and normal mode
 inoremap jj <Esc>
 " copy and paste paragraph below
-noremap cp yap<S-}>p
+noremap ypp yap<S-}>p
+" copy and paste tag below
+noremap ytp yat<S-}>p
 " quickly align current paragraph, useful to see if missing ending brackets
 noremap <leader>a =ip
 " control directions to change panels
@@ -150,13 +167,13 @@ inoremap <C-k> <C-o>k
 inoremap <C-e> <C-o>$
 inoremap <C-a> <C-o>^
 " change split window size
-nnoremap <leader>+ :vertical resize +5<cr>
-nnoremap <leader>- :vertical resize -5<cr>
-nnoremap <leader>c :close
+nnoremap <leader>+ :vertical resize +5<cr> 
+nnoremap <leader>- :vertical resize -5<cr> 
 " quickly close a file
 noremap <leader>q :q<cr>
-" close all files
+noremap <leader>Q :q!<cr>
 noremap <leader>qa :qa<cr>
+
 "" force close a file
 noremap <leader>Q :q!<cr>
 " quickly save a file in both normal and insert mode
@@ -165,17 +182,47 @@ nnoremap <leader>s :w<cr>
 nnoremap <leader>so :so ~/.vimrc<cr>
 " save and quit
 noremap <leader>z ZZ
+" hide current file
+" noremap <leader>h :hide<cr>
+" pretty format XML
+noremap <leader>pf :%!xmllint --format -<cr>
 " finding files using FZF
-"nnoremap <silent> <C-f> :Files<CR>  
 nnoremap <silent> <leader>f :FZF<cr>
 nnoremap <silent> <leader>F :FZF ~<cr>
+
+" toggle line number
+noremap <leader>l :set number!<cr>
+" copy to register y
+vmap <C-c> "yy
+" paste from register y
+nnoremap <leader>v "yp
+" replace current word with default register (*)
+noremap pw viwp
+" quickly switch buffers
+nnoremap <Leader>b :ls<CR>:b<Space>
+" toggle undotree; show changes in history
+nnoremap <Leader>u :UndotreeToggle<CR>
+" toggle NERDTree
+nnoremap <C-t> :NERDTreeToggle<CR>
 "quickly switch buffers
 nnoremap <Leader>bu :ls<CR>:b<Space>
+
 " open terminal in verical window
 nnoremap <leader>t :vert term<CR>
 " install Plugin using vim-plug
 noremap <leader>pi :PlugInstall<CR>
 " toggle GitGutter
+
+noremap <leader>git :GitGutterToggle<CR>
+" add blankline above
+noremap <leader><cr> O<Esc>
+" quickly add a blankline
+noremap <CR> o<Esc>
+" open registers
+noremap <leader>r :registers<CR>
+" search yanked texts
+vmap / y:/<C-r>"<CR>
+
 noremap <C-g> :GitGutterToggle<CR>
 " toggle undotree; show changes in history
 nnoremap <Leader>u :UndotreeToggle<CR>
@@ -185,28 +232,40 @@ nnoremap <C-t> :NERDTreeToggle<CR>
 noremap <C-n> :set number!<cr>
 " toggle syntastic
 nnoremap <C-s> :SyntasticCheck<CR>
+
 " search and replace current word, go to the word to be replaced and type the
 " command below
 nnoremap <leader>Rw yiw:%s#<C-r>"##g<left><left>
 nnoremap <leader>Rwc yiw:%s#<C-r>"##gc<left><left><left>
 " search and replace current characters within quotes with yanked text from
 " register y (use command "yy)
+
 nnoremap <leader>Ry yi":%s#<C-r>"#<C-r>y#g<CR>
 nnoremap <leader>Ryc yi":%s#<C-r>"#<C-r>y#gc<CR>
 nnoremap <leader>Rs yi":%s#<C-r>"##g<left><left>
 nnoremap <leader>Rsc yi":%s#<C-r>"##gc<left><left><left>
+
+" fold based on skip-noskip
+noremap ski :setlocal foldmethod=expr foldexpr=FoldOnKeyword()<CR>
+
 " replace all highlighted texts
 nnoremap <Leader>Rh :%s///g<left><left>
 " quickly move to the begining and end of line; this will override the cursor
 " motion for top/bottom
 nmap H ^
 nmap L $
+
 " remove search highlight
 nmap <F9> :nohl
 
 " Center the cursor vertically when moving to the next word during a search.
 nnoremap n nzz
 nnoremap N Nzz
+
+" jump between diffs
+noremap [ [c
+noremap ] ]c
+
 " JK motions: Line motions
 map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
@@ -218,6 +277,65 @@ map <Leader>e <Plug>(easymotion-e)
 map <Leader>E <Plug>(easymotion-E)
 map <Leader>n <Plug>(easymotion-n)
 map <Leader>N <Plug>(easymotion-N)
+
+
+" define a general fold method
+set foldmethod=indent   " fold based on indent
+" autocmd FileType vim setlocal foldmethod=marker  " fold using marker (e.g., comments)
+
+" fold using custom expression for PFLOTRAN.in file
+au BufNewFile,BufRead *.in set filetype=in
+" au FileType in setlocal foldmethod=expr
+" au FileType in setlocal foldexpr=InFolds()   " fold lines starting with #
+" au FileType in setlocal foldexpr=getline(v:lnum)[0]=='\#'   " fold lines starting with #
+" define a new function for the fold method: 1) fold when line starts with #;
+" 2) fold when indent
+
+function! InFolds()
+  let thisline = getline(v:lnum)
+  " when line is empty, use the fold level before or after this line
+  " if thisline =~? '\v^\s*$'  
+  "   return '-1'
+  " endif
+  " fold when line starts with #
+  if thisline =~ '^\#\ .*$'
+    return 1
+  " elseif thisline =~ '^skip.*$'
+  "   return '>1'
+  " elseif thisline =~ '^noskip.*$'
+  "   return '<1'
+  else
+    " fold when indent
+    return indent(v:lnum) / &shiftwidth
+  endif
+endfunction
+
+" fold based on keywords (skip --> noskip)
+function! FoldOnKeyword()
+    let line = getline(v:lnum)
+    if a:line == 'skip'
+        " A level 1 fold starts here; cp :help fold-expr
+        return '>1'
+    elseif a:line == 'noskip'
+        " A level 1 fold ends here
+        return '<1'
+    else
+        " Use fold level from previous line
+        return '='
+    endif
+endfunction
+" setlocal foldmethod=expr foldexpr=FoldOnKeyword()
+
+" fold xml tags (foldlevel default to 1; max fold =10; nofoldenable, do not
+" fold by default)
+let g:xml_syntax_folding=1
+au FileType xml setlocal foldmethod=syntax foldlevel=1 foldnestmax=10 nofoldenable
+" show filepath
+set laststatus=2
+set statusline+=%F
+set clipboard+=unnamed
+
+
 " jump to diff in vimdiff
 nmap [ [c
 nmap ] ]c
@@ -278,3 +396,4 @@ hi MatchWord ctermfg=red guifg=blue cterm=underline gui=underline
 "let g:instant_markdown_autoscroll = 0
 " let g:instant_markdown_port = 8855
 "let g:instant_markdown_python = 1
+

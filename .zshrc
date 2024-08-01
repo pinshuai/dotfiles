@@ -21,19 +21,19 @@ eval "$(rbenv init - zsh)"
 # alias scp='noglob scp'
 unsetopt nomatch
 
+
 # bind keys
 bindkey "[C" forward-word
 bindkey "[D" backward-word
-# use tab to autocomplete suggestions, may overwrite default tab dirs behaviors
-# bindkey '\t' autosuggest-accept
 
-setopt extendedglob
 # store dirs history
+
 #setopt AUTO_PUSHD                  # pushes the old directory onto the stack
 #setopt PUSHD_MINUS                 # exchange the meanings of '+' and '-'
 #setopt CDABLE_VARS                 # expand the expression (allows 'cd -2/tmp')
 #autoload -U compinit && compinit   # load + start completion
 #zstyle ':completion:*:directory-stack' list-colors '=(#b) #([0-9]#)*( *)==95=38;5;12'
+
 
 gitpullpush() {
 ## echo "commit message:"
@@ -48,12 +48,8 @@ git push origin main
 echo "--Done!"
 }
 
-# func
-rjlab(){
-    # Forwards port $1 (local machine) into port $2 (remote server) and listens to it
-    echo "forwarding remote port:$1 to local port:$2"
-    ssh -N -f -L localhost:${2}:localhost:${1} shua784@pinklady.pnl.gov
-}
+#PATHs
+# export PATH=$PATH:/global/project/projectdirs/m1800/pin/pflotran/pflotran-030821/src/pflotran/bin
 
 
 # If you come from bash you might have to change your $PATH.
@@ -61,6 +57,7 @@ rjlab(){
 
 # Path to your oh-my-zsh installation.
 export ZSH="/Users/shuai/.oh-my-zsh"
+
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -91,7 +88,7 @@ ZSH_THEME="robbyrussell"
 # export UPDATE_ZSH_DAYS=13
 
 # Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS=true
+# DISABLE_MAGIC_FUNCTIONS="true"
 
 # Uncomment the following line to disable colors in ls.
 # DISABLE_LS_COLORS="true"
@@ -103,6 +100,8 @@ ZSH_THEME="robbyrussell"
 # ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
+# Caution: this setting can cause issues with multiline prompts (zsh 5.7.1 and newer seem to work)
+# See https://github.com/ohmyzsh/ohmyzsh/issues/5765
 # COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
@@ -112,7 +111,6 @@ ZSH_THEME="robbyrussell"
 
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
-
 # You can set one of the optional three formats:
 # "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
 # or set a custom format using the strftime function format specifications,
@@ -127,7 +125,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git fzf zsh-autosuggestions docker docker-compose)
+plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -156,7 +154,12 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-#
+
+
+alias bfg='java -jar /global/project/projectdirs/m1800/pin/bfg/bfg-1.14.0.jar'
+
+alias v='vim'
+
 
 alias l='ls -ltrGFho'
 alias scp='\scp'
@@ -210,6 +213,7 @@ else
         . "/Users/shuai/mambaforge/etc/profile.d/conda.sh"
     else
         export PATH="/Users/shuai/mambaforge/bin:$PATH"
+
     fi
 fi
 unset __conda_setup

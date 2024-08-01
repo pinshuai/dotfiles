@@ -173,6 +173,7 @@ chpc_home2pc() {
 
 
 # add shortcut
+
 export NB=$HOME/github
 export ICLOUD=$HOME/Library/Mobile\ Documents/iCloud~md~obsidian/Documents/notes
 export ATS_SRC_DIR=$NB/ats
