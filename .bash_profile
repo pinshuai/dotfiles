@@ -52,7 +52,142 @@ alias sshpl='ssh shua784@pinklady.pnl.gov'
 alias nbv='open -a Jupyter\ Notebook\ Viewer'
 alias sshcon='ssh shua784@constance.pnl.gov'
 alias bfg="java -jar ~/Dropbox/Software/BFG/bfg-1.14.0.jar"
+alias pngcomp="oxipng -o 4"
+
 # bash function
+
+
+extract_frames_from_video() {
+    local INPUT=$1
+    local SCENEDETECT_METHOD=${2:-"detect-content"}  # Default to 'detect-content'
+    local THRESHOLD=${3:-18}  # Default threshold value is 18 if not provided
+
+    if [[ -z "$INPUT" ]]; then
+        echo "Error: Please provide a video URL or a file path."
+        return 1
+    fi
+
+    local OUTPUT_VIDEO
+    local OUTPUT_DIR
+    local OUTPUT_PDF
+
+    # Check if the input is a URL or a file path
+    if [[ "$INPUT" =~ ^http ]]; then
+        # Input is a URL, download the video
+        OUTPUT_VIDEO="$(yt-dlp --get-filename -o '%(title)s.%(ext)s' "$INPUT")"
+        echo "Downloading video from $INPUT..."
+        yt-dlp -o "$OUTPUT_VIDEO" "$INPUT"
+
+        if [[ $? -ne 0 ]]; then
+            echo "Error: Failed to download video."
+            return 1
+        fi
+    elif [[ -f "$INPUT" ]]; then
+        # Input is a file path, use it directly
+        OUTPUT_VIDEO="$INPUT"
+        echo "Using local video file: $OUTPUT_VIDEO"
+    else
+        echo "Error: Invalid input. Please provide a valid URL or file path."
+        return 1
+    fi
+
+    # Set output directory and PDF names based on the video filename
+    OUTPUT_DIR="${OUTPUT_VIDEO%.*}_frames"
+    OUTPUT_PDF="${OUTPUT_VIDEO%.*}_frames.pdf"
+
+    echo "Creating output directory: $OUTPUT_DIR"
+    mkdir -p "$OUTPUT_DIR"
+
+    echo "Extracting frames with scenedetect using arguments: $SCENEDETECT_METHOD and threshold: $THRESHOLD..."
+    scenedetect -i "$OUTPUT_VIDEO" --stats stats.csv -o "$OUTPUT_DIR" $SCENEDETECT_METHOD --threshold $THRESHOLD save-images --quality 95
+
+    if [[ $? -ne 0 ]]; then
+        echo "Error: Failed to extract frames."
+        return 1
+    fi
+
+    echo "Converting frames to PDF..."
+    magick "$OUTPUT_DIR"/*.jpg "$OUTPUT_PDF"
+
+    if [[ $? -eq 0 ]]; then
+        echo "PDF creation complete. PDF saved as $OUTPUT_PDF."
+    else
+        echo "Error: Failed to create PDF."
+        return 1
+    fi
+}
+
+doc2md() {
+  # Convert a document to markdown
+  # First argument is the name of the document file
+  # Second argument is the name of the markdown file (optional)
+  
+  input_file="$1"
+  
+  # Check if the second argument is provided
+  if [ -z "$2" ]; then
+    # Remove the extension from the first argument and add .md
+    output_file="${input_file%.*}.md"
+  else
+    output_file="$2"
+  fi
+
+  # Run the pandoc command
+  pandoc "$input_file" -o "$output_file" \
+    --to markdown_strict \
+    --extract-media=./figures \
+    --verbose
+}
+
+
+pandoc2pdf() {
+  # Convert markdown to pdf
+  # First argument is the name of the markdown file
+  # Second argument is the name of the pdf file (optional)
+  
+  input_file="$1"
+  
+  # Check if the second argument is provided
+  if [ -z "$2" ]; then
+    # Remove the extension from the first argument and add .pdf
+    output_file="${input_file%.*}.pdf"
+  else
+    output_file="$2"
+  fi
+
+  # Run the pandoc command
+  pandoc "$input_file" -o "$output_file" \
+    --resource-path=/Users/shuai/github/notes/attachments/figures \
+    --from markdown \
+    --strip-comments=true \
+    --template eisvogel \
+    --listings \
+    --bibliography=/Users/shuai/Dropbox/Papers4Mendeley/BibTex/MyLibrary.bib \
+    --citeproc \
+    --csl=/Users/shuai/.local/share/pandoc/csl/apa.csl \
+    --pdf-engine=/usr/local/texlive/2023/bin/universal-darwin/pdflatex \
+    --verbose
+}
+
+screenshot2pdf() {
+  # Convert screenshot(s) to a single PDF
+  # First argument is the date in the format of %Y-%m-%d
+  # Second argument is the name of the pdf file (optional)
+  # after conversion, use smallPDF to compress the file
+  #
+  date_str="$1"
+  
+  # Check if the second argument is provided
+  if [ -z "$2" ]; then
+    # Set default output file name based on the date
+    output_file="Screenshots_$date_str.pdf"
+  else
+    output_file="$2"
+  fi
+  
+  # Convert the screenshots to a single PDF
+  magick convert ~/Dropbox/Screenshots/Screenshot\ $date_str*.png ~/Dropbox/Screenshots/$output_file
+}
 
 # list the files to be staged in the order of file size
 gstS() {
@@ -205,10 +340,10 @@ export WATERSHED_WORKFLOW_DATA_DIR=$HOME/github/watershed-workflow/data_library
 export WATERSHED_WORKFLOW_DIR=$HOME/github/watershed-workflow
 
 # add python path for ats
-export PYTHONPATH="${PYTHONPATH}:$ATS_SRC_DIR/tools/utils"
+# export PYTHONPATH="${PYTHONPATH}:$ATS_SRC_DIR/tools/utils"
 
 # add python path for watershed_workfow
-export PYTHONPATH="${PYTHONPATH}:$SEACAS_DIR/lib"
+# export PYTHONPATH="${PYTHONPATH}:$SEACAS_DIR/lib"
 # ========== API keys (do not share) ===============
 # WaDE
 export WADE_API_KEY=
@@ -233,6 +368,13 @@ export LAGRIT_EXE=$NB/LaGriT/build/lagrit
 export DFNGEN_EXE=$dfnworks_DIR/DFNGen/DFNGen 
 export PATH="$DAKOTA_DIR/bin:$PATH"
 export PATH="$PFLOTRAN_DIR/src/pflotran/bin:$PATH"
+
+# For compilers to find libffi you may need to set:
+export LDFLAGS="-L/opt/homebrew/opt/libffi/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/libffi/include"
+
+# For pkg-config to find libffi you may need to set:
+export PKG_CONFIG_PATH="/opt/homebrew/opt/libffi/lib/pkgconfig"
 
 
 # >>> conda initialize >>>

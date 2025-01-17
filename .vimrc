@@ -196,7 +196,9 @@ noremap <leader>l :set number!<cr>
 " copy to register y
 vmap <C-c> "yy
 " paste from register y
-nnoremap <leader>v "yp
+nnoremap pv "yp
+" paste from register 1
+nnoremap p1 "1p
 " replace current word with default register (*)
 noremap pw viwp
 " quickly switch buffers
@@ -397,4 +399,10 @@ hi MatchWord ctermfg=red guifg=blue cterm=underline gui=underline
 "let g:instant_markdown_autoscroll = 0
 " let g:instant_markdown_port = 8855
 "let g:instant_markdown_python = 1
+"
+" ---copilot setting---
+au BufNewFile,BufRead * let b:copilot_enabled = 0
+" add command to mannually enable copilot
+command CopilotEnable let b:copilot_enabled = 1
+
 
