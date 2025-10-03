@@ -22,6 +22,7 @@ fi
 # export LSCOLORS=ExFxBxDxCxegedabagacad
 
 # add alias
+alias run_ladder='docker run -p 8080:8080 -d --env RULESET=https://t.ly/14PSf --name ladder ghcr.io/everywall/ladder:latest'
 alias mkdir='mkdir -p'
 alias cp='cp -rp'
 alias ci='c $ICLOUD'
@@ -39,24 +40,17 @@ alias ltr='ls -ltrGFho'
 # alias l='ls -ltrGFho'
 alias pullmaster='git pull origin master'
 alias pushmaster='git push origin master'
-alias sshproxy='~/Dropbox/github/NERSC-MFA/sshproxy.sh -u pshuai'
+# alias sshproxy='~/Dropbox/github/NERSC-MFA/sshproxy.sh -u pshuai'
 alias sshcori='ssh -l pshuai -i ~/.ssh/nersc cori.nersc.gov'
-alias sshperlmutter='ssh pshuai@perlmutter-p1.nersc.gov'
-alias sshycori='ssh -Y pshuai@cori.nersc.gov'
-alias sshedi='ssh pshuai@edison.nersc.gov'
-# alias gitls='git status'
-# alias gstS="git status --porcelain | awk '{print $2}' | xargs ls -halFS" # order by file size in git status
+alias sshperlmutter='ssh pshuai@perlmutter.nersc.gov'
 alias glf='git log --follow -p --'
-alias sshpl='ssh shua784@pinklady.pnl.gov'
 #alias cgrep='grep -ir --color'
 alias nbv='open -a Jupyter\ Notebook\ Viewer'
 alias sshcon='ssh shua784@constance.pnl.gov'
-alias bfg="java -jar ~/Dropbox/Software/BFG/bfg-1.14.0.jar"
-alias pngcomp="oxipng -o 4"
+#alias bfg="java -jar ~/Dropbox/Software/BFG/bfg-1.14.0.jar"
+#alias pngcomp="oxipng -o 4"
 
 # bash function
-
-
 extract_frames_from_video() {
     local INPUT=$1
     local SCENEDETECT_METHOD=${2:-"detect-content"}  # Default to 'detect-content'
@@ -157,14 +151,14 @@ pandoc2pdf() {
 
   # Run the pandoc command
   pandoc "$input_file" -o "$output_file" \
-    --resource-path=/Users/shuai/github/notes/attachments/figures \
+    --resource-path=~/github/notes/attachments/figures \
     --from markdown \
     --strip-comments=true \
     --template eisvogel \
     --listings \
-    --bibliography=/Users/shuai/Dropbox/Papers4Mendeley/BibTex/MyLibrary.bib \
+    --bibliography=~/Dropbox/Papers4Mendeley/BibTex/MyLibrary.bib \
     --citeproc \
-    --csl=/Users/shuai/.local/share/pandoc/csl/apa.csl \
+    --csl=~/.local/share/pandoc/csl/apa.csl \
     --pdf-engine=/usr/local/texlive/2023/bin/universal-darwin/pdflatex \
     --verbose
 }
@@ -333,60 +327,48 @@ pc2tacc_work() {
 
 export NB=$HOME/github
 export ICLOUD=$HOME/Library/Mobile\ Documents/iCloud~md~obsidian/Documents/notes
+
 export ATS_SRC_DIR=$NB/ats
 export AMANZI_SRC_DIR=$NB/amanzi
-
 export WATERSHED_WORKFLOW_DATA_DIR=$HOME/github/watershed-workflow/data_library 
 export WATERSHED_WORKFLOW_DIR=$HOME/github/watershed-workflow
 
-# add python path for ats
-# export PYTHONPATH="${PYTHONPATH}:$ATS_SRC_DIR/tools/utils"
+# add texlive
+export PATH="/usr/local/texlive/2025/bin/universal-darwin:$PATH"
 
-# add python path for watershed_workfow
-# export PYTHONPATH="${PYTHONPATH}:$SEACAS_DIR/lib"
-# ========== API keys (do not share) ===============
-# WaDE
-export WADE_API_KEY=
-# ========= Username/Passwords (CONFIDENTIAL) =======
-# AppEEARS
-export APPEEARS_USERNAME=
-export APPEEARS_PASSWORD=
+##=========add pflotran short course related vars=================
+#export PATH="/opt/homebrew/bin:$PATH"  
+#export PETSC_DIR=$NB/petsc
+#export SEACAS_DIR=$NB/seacas
+#export PETSC_ARCH=arch-darwin-c-opt  
+#export PFLOTRAN_DIR=$NB/pflotran
+#export DAKOTA_DIR=$NB/dakota
+#export dfnworks_DIR=$NB/dfnWorks 
+#export dfnworks_PATH=$NB/dfnWorks 
+#export PFLOTRAN_EXE=$PFLOTRAN_DIR/src/pflotran/pflotran 
+#export LAGRIT_EXE=$NB/LaGriT/build/lagrit 
+#export DFNGEN_EXE=$dfnworks_DIR/DFNGen/DFNGen 
+#export PATH="$DAKOTA_DIR/bin:$PATH"
+#export PATH="$PFLOTRAN_DIR/src/pflotran/bin:$PATH"
 
-export PATH="/usr/local/texlive/2023/bin/universal-darwin:$PATH"
+## For compilers to find libffi you may need to set:
+#export LDFLAGS="-L/opt/homebrew/opt/libffi/lib"
+#export CPPFLAGS="-I/opt/homebrew/opt/libffi/include"
 
-#=========add pflotran short course related vars=================
-export PATH="/opt/homebrew/bin:$PATH"  
-export PETSC_DIR=$NB/petsc
-export SEACAS_DIR=$NB/seacas
-export PETSC_ARCH=arch-darwin-c-opt  
-export PFLOTRAN_DIR=$NB/pflotran
-export DAKOTA_DIR=$NB/dakota
-export dfnworks_DIR=$NB/dfnWorks 
-export dfnworks_PATH=$NB/dfnWorks 
-export PFLOTRAN_EXE=$PFLOTRAN_DIR/src/pflotran/pflotran 
-export LAGRIT_EXE=$NB/LaGriT/build/lagrit 
-export DFNGEN_EXE=$dfnworks_DIR/DFNGen/DFNGen 
-export PATH="$DAKOTA_DIR/bin:$PATH"
-export PATH="$PFLOTRAN_DIR/src/pflotran/bin:$PATH"
-
-# For compilers to find libffi you may need to set:
-export LDFLAGS="-L/opt/homebrew/opt/libffi/lib"
-export CPPFLAGS="-I/opt/homebrew/opt/libffi/include"
-
-# For pkg-config to find libffi you may need to set:
-export PKG_CONFIG_PATH="/opt/homebrew/opt/libffi/lib/pkgconfig"
+## For pkg-config to find libffi you may need to set:
+#export PKG_CONFIG_PATH="/opt/homebrew/opt/libffi/lib/pkgconfig"
 
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/shuai/opt/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+__conda_setup="$('/opt/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/Users/shuai/opt/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/Users/shuai/opt/anaconda3/etc/profile.d/conda.sh"
+    if [ -f "/opt/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/opt/anaconda3/etc/profile.d/conda.sh"
     else
-        export PATH="/Users/shuai/opt/anaconda3/bin:$PATH"
+        export PATH="/opt/anaconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup

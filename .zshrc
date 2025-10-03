@@ -1,9 +1,13 @@
+
+# Path to your Oh My Zsh installation.
+export ZSH="$HOME/.oh-my-zsh"
+
 #source ~/github/zsh-snap/znap.zsh
 source ~/.bash_profile
 
 
 # add pass env variables
-export PASSWORD_STORE_DIR="/Users/shuai/.password-store"
+export PASSWORD_STORE_DIR="~/.password-store"
 
 
 # add auto complete for zsh
@@ -59,10 +63,6 @@ echo "--Done!"
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
-
-# Path to your oh-my-zsh installation.
-export ZSH="/Users/shuai/.oh-my-zsh"
-
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -161,7 +161,7 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 
-alias bfg='java -jar /global/project/projectdirs/m1800/pin/bfg/bfg-1.14.0.jar'
+#alias bfg='java -jar /global/project/projectdirs/m1800/pin/bfg/bfg-1.14.0.jar'
 
 alias v='vim'
 
@@ -208,28 +208,37 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 # for zoxide
 eval "$(zoxide init zsh)"
 
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+#source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
+#source /opt/homebrew/opt/chruby/share/chruby/auto.sh
+#chruby ruby-3.1.3
+
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/shuai/mambaforge/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$('/Users/a02388352/miniforge3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/Users/shuai/mambaforge/etc/profile.d/conda.sh" ]; then
-        . "/Users/shuai/mambaforge/etc/profile.d/conda.sh"
+    if [ -f "/Users/a02388352/miniforge3/etc/profile.d/conda.sh" ]; then
+        . "/Users/a02388352/miniforge3/etc/profile.d/conda.sh"
     else
-        export PATH="/Users/shuai/mambaforge/bin:$PATH"
-
+        export PATH="/Users/a02388352/miniforge3/bin:$PATH"
     fi
 fi
 unset __conda_setup
-
-if [ -f "/Users/shuai/mambaforge/etc/profile.d/mamba.sh" ]; then
-    . "/Users/shuai/mambaforge/etc/profile.d/mamba.sh"
-fi
 # <<< conda initialize <<<
 
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
-source /opt/homebrew/opt/chruby/share/chruby/auto.sh
-chruby ruby-3.1.3
+# >>> mamba initialize >>>
+# !! Contents within this block are managed by 'mamba shell init' !!
+export MAMBA_EXE='/Users/a02388352/miniforge3/bin/mamba';
+export MAMBA_ROOT_PREFIX='/Users/a02388352/miniforge3';
+__mamba_setup="$("$MAMBA_EXE" shell hook --shell zsh --root-prefix "$MAMBA_ROOT_PREFIX" 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__mamba_setup"
+else
+    alias mamba="$MAMBA_EXE"  # Fallback on help from mamba activate
+fi
+unset __mamba_setup
+# <<< mamba initialize <<<

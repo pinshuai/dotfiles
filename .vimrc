@@ -33,6 +33,7 @@ Plug 'justinmk/vim-sneak'
 Plug 'mbbill/undotree'
 
 " Plug 'sukima/xmledit'
+Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-unimpaired'
