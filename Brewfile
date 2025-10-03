@@ -1,0 +1,113 @@
+# packages/command-line utilities
+tap "homebrew/core"
+tap "homebrew/bundle"
+tap "buo/cask-upgrade"
+
+# from Macbook Pro M1
+tap "hashicorp/tap"
+tap "jkfran/killport"
+tap "lencx/chatgpt", "https://github.com/lencx/ChatGPT.git"
+tap "textualize/homebrew"
+brew "little-cms2"
+brew "webp"
+brew "jpeg-xl"
+brew "aom"
+brew "autoconf"
+brew "automake"
+brew "bat"
+brew "bison"
+brew "chruby"
+brew "cmake"
+brew "fd"
+brew "unbound"
+brew "gnutls"
+brew "harfbuzz"
+brew "openjpeg"
+brew "leptonica"
+brew "libass"
+brew "librist"
+brew "pango"
+brew "tesseract"
+brew "ffmpeg"
+brew "fzf"
+brew "gcc"
+brew "gdbm"
+brew "gh"
+brew "ghostscript"
+brew "gnupg"
+brew "libheif"
+brew "libffi"
+brew "libtool"
+brew "imagemagick"
+brew "libyaml"
+brew "mosh"
+brew "node"
+brew "openblas"
+brew "numpy"
+brew "openvino"
+brew "oxipng"
+brew "pandoc"
+brew "pandoc-crossref"
+brew "tree"
+brew "pass"
+brew "pinentry-mac"
+brew "poppler"
+brew "progress"
+brew "ruby-build"
+brew "rbenv"
+brew "ripgrep"
+brew "ruby-install"
+brew "ttyd"
+brew "ufraw"
+brew "vim"
+brew "wget"
+brew "youplot"
+brew "zoxide"
+brew "hashicorp/tap/packer"
+brew "jkfran/killport/killport"
+brew "textualize/homebrew/frogmouth"
+# apps
+cask "alt-tab"
+cask "chatgpt"
+cask "monitorcontrol"
+cask "qlmarkdown"
+cask "stats"
+
+#---added apps---
+
+
+brew "git"
+brew "github-keygen"
+brew 'bash-completion'
+
+brew "zsh"
+brew "zsh-autosuggestions"
+brew "zsh-completions"
+brew "zsh-syntax-highlighting"
+brew "zsh-git"
+brew "zsh-bat"
+
+cask "google-chrome"
+cask "docker"
+cask "zoom"
+cask 'dropbox'
+cask 'alfred'
+cask 'iterm2'
+cask 'macdown'
+cask 'brave-browser'
+cask 'anaconda'
+cask 'bartender'
+cask 'box-drive'
+cask 'flux'
+cask 'jupyterlab'
+cask 'macvim'
+cask 'mailmate'
+cask 'obsidian'
+cask 'parallels'
+cask 'paraview'
+cask 'qgis'
+cask 'readdle-spark'
+cask 'visual-studio-code'
+cask 'vivid'
+cask 'zotero'
+
